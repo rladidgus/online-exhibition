@@ -1,0 +1,114 @@
+.designers-page {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 80px 40px 100px;
+}
+
+.designers-header {
+  padding-top: 2rem;
+  position: relative;
+  margin-bottom: 48px;
+}
+
+.designers-header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: #000;
+}
+
+.designers-header-inner {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+}
+
+.designers-title {
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+}
+
+.designers-count {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+}
+
+.designers-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 40px 24px;
+}
+
+.designer-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.designer-image {
+  width: 100%;
+  aspect-ratio: 1;
+  overflow: hidden;
+  background: var(--color-hover);
+  border-radius: 50%;
+}
+
+.designer-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease, opacity 0.3s ease;
+}
+
+.designer-card:hover .designer-image img {
+  transform: scale(1.06);
+  opacity: 0.85;
+}
+
+.designer-name {
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  transition: color 0.2s;
+}
+
+.designer-card:hover .designer-name {
+  color: var(--color-accent);
+}
+
+.designer-category {
+  font-size: 11px;
+  color: var(--color-text-secondary);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+@media (max-width: 1024px) {
+  .designers-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .designers-page {
+    padding: 60px 20px 80px;
+  }
+
+  .designers-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .designers-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

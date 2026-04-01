@@ -1,0 +1,35 @@
+.category-filter {
+  display: flex;
+  gap: 0;
+}
+
+.category-btn {
+  padding: 9px 20px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  border: 1px solid var(--color-border);
+  border-right: none;
+  border-radius: 0;
+  transition: all 0.2s;
+  letter-spacing: 0.02em;
+}
+
+.category-btn:last-child {
+  border-right: 1px solid var(--color-border);
+}
+
+.category-btn:hover {
+  color: var(--color-accent);
+  border-color: var(--color-accent);
+  z-index: 1;
+  position: relative;
+}
+
+.category-btn.active {
+  background: var(--color-text);
+  color: #ffffff;
+  border-color: var(--color-text);
+  z-index: 1;
+  position: relative;
+}

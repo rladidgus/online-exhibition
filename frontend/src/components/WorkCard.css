@@ -1,0 +1,60 @@
+.work-card {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  cursor: pointer;
+}
+
+.work-card-image {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: #f0f0f0;
+  position: relative;
+}
+
+.work-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease, opacity 0.3s ease;
+}
+
+.work-card:hover .work-card-image img {
+  transform: scale(1.06);
+  opacity: 0.88;
+}
+
+.work-card-info {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding-top: 4px;
+  border-top: 1px solid var(--color-border);
+}
+
+.work-card-category {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+}
+
+.work-card-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--color-text);
+  letter-spacing: -0.025em;
+  line-height: 1.4;
+  transition: color 0.2s;
+}
+
+.work-card:hover .work-card-title {
+  color: var(--color-accent);
+}
+
+.work-card-author {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+}
