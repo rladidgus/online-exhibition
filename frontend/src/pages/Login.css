@@ -1,0 +1,53 @@
+.login-container {
+  max-width: 400px;
+  margin: 100px auto;
+  padding: 40px 20px;
+  text-align: center;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.login-container h2 {
+  margin-bottom: 16px;
+  font-size: 24px;
+  color: #333;
+}
+
+.login-container p {
+  color: #666;
+  margin-bottom: 32px;
+  line-height: 1.5;
+}
+
+.login-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.login-btn {
+  padding: 14px 20px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: opacity 0.2s;
+  width: 100%;
+}
+
+.login-btn:hover {
+  opacity: 0.9;
+}
+
+.login-btn.google {
+  background-color: #f2f2f2;
+  color: #333;
+  border: 1px solid #ddd;
+}
+
+.login-btn.kakao {
+  background-color: #FEE500;
+  color: #000000;
+}

@@ -11,6 +11,16 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+from app.routers.auth import router as auth_router
+from app.routers.works import router as works_router
+from app.routers.reviews import router as reviews_router
+from app.routers.likes import router as likes_router
+
+app.include_router(auth_router)
+app.include_router(works_router)
+app.include_router(reviews_router)
+app.include_router(likes_router)
+
 @app.get("/")
 def root():
     return {"message": "Online Exhibition API"}
