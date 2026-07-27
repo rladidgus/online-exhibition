@@ -1,0 +1,7 @@
+{
+  "name": "online-exhibition",
+  "private": true,
+  "scripts": {
+    "build": "cd frontend && npm run build"
+  }
+}
