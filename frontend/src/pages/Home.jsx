@@ -14,7 +14,7 @@ export default function Home() {
       {/* Hero */}
       <section className="home-hero">
         <div className="home-hero-inner">
-          <p className="home-hero-sub bounce delay-1">2025 졸업전시</p>
+          <p className="home-hero-sub bounce delay-1">2026 졸업전시</p>
           <h1 className="home-hero-title bounce delay-2">
             우리의 작품을<br />세상에 선보입니다
           </h1>

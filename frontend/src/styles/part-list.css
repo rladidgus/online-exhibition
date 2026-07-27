@@ -1,0 +1,86 @@
+/* 파트별 이름 목록 — Designers / Works 공용 */
+
+.part-section {
+  margin-bottom: 64px;
+}
+
+.part-section:last-child {
+  margin-bottom: 0;
+}
+
+.part-header {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  padding-bottom: 16px;
+  margin-bottom: 24px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.part-title {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+}
+
+.part-en {
+  font-size: 12px;
+  color: var(--color-text-secondary);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.part-count {
+  margin-left: auto;
+  font-size: 12px;
+  color: var(--color-text-secondary);
+}
+
+.part-name-list {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 4px 12px;
+  padding: 0;
+  margin: 0;
+}
+
+.part-name {
+  display: block;
+  padding: 10px 12px;
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  color: var(--color-text);
+  text-decoration: none;
+  border-radius: 6px;
+  transition: background-color 0.18s ease, color 0.18s ease;
+}
+
+.part-name:hover,
+.part-name:focus-visible {
+  background: var(--color-hover);
+  color: var(--color-accent);
+}
+
+@media (max-width: 1024px) {
+  .part-name-list {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .part-name-list {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .part-section {
+    margin-bottom: 48px;
+  }
+}
+
+@media (max-width: 480px) {
+  .part-name-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

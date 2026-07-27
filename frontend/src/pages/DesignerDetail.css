@@ -1,0 +1,134 @@
+.designer-detail {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 80px 40px 100px;
+}
+
+.designer-detail-inner {
+  max-width: 760px;
+}
+
+.designer-back {
+  display: inline-block;
+  margin-bottom: 40px;
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.designer-back:hover {
+  color: var(--color-accent);
+}
+
+.designer-detail-header {
+  padding-bottom: 32px;
+  margin-bottom: 48px;
+  border-bottom: 1px solid #000;
+}
+
+.designer-detail-part {
+  display: inline-block;
+  margin-bottom: 12px;
+  padding: 4px 10px;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  color: var(--color-text-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+}
+
+.designer-detail-name {
+  font-size: 40px;
+  font-weight: 700;
+  letter-spacing: -0.045em;
+  line-height: 1.15;
+}
+
+.designer-detail-major {
+  margin-top: 8px;
+  font-size: 14px;
+  color: var(--color-text-secondary);
+}
+
+/* ── Works ─────────────────────────────────── */
+
+.designer-works {
+  margin-bottom: 64px;
+}
+
+.designer-works-title {
+  margin-bottom: 16px;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+}
+
+.designer-works-empty {
+  margin-bottom: 24px;
+  font-size: 14px;
+  color: var(--color-text-secondary);
+}
+
+/* ── 같은 파트 참여자 ──────────────────────── */
+
+.designer-siblings-title {
+  padding-bottom: 16px;
+  margin-bottom: 20px;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.designer-siblings-title span {
+  margin-left: 6px;
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--color-text-secondary);
+}
+
+.designer-siblings-list {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 0;
+  margin: 0;
+}
+
+.designer-sibling {
+  display: block;
+  padding: 7px 14px;
+  font-size: 14px;
+  color: var(--color-text);
+  text-decoration: none;
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  transition: border-color 0.18s ease, color 0.18s ease;
+}
+
+.designer-sibling:hover,
+.designer-sibling:focus-visible {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+.designer-empty {
+  font-size: 15px;
+  color: var(--color-text-secondary);
+}
+
+@media (max-width: 768px) {
+  .designer-detail {
+    padding: 60px 20px 80px;
+  }
+
+  .designer-detail-name {
+    font-size: 30px;
+  }
+
+  .designer-back {
+    margin-bottom: 28px;
+  }
+}

@@ -4,6 +4,7 @@ import Home from './pages/Home'
 import Works from './pages/Works'
 import WorkDetail from './pages/WorkDetail'
 import Designers from './pages/Designers'
+import DesignerDetail from './pages/DesignerDetail'
 import Login from './pages/Login'
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
         <Route path="/works" element={<Works />} />
         <Route path="/works/:id" element={<WorkDetail />} />
         <Route path="/designers" element={<Designers />} />
+        <Route path="/designers/:id" element={<DesignerDetail />} />
         <Route path="/login" element={<Login />} />
       </Routes>
     </BrowserRouter>

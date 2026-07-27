@@ -39,7 +39,7 @@ export default function Navbar() {
     <nav className="navbar">
       <div className="navbar-inner">
         <Link to="/" className="navbar-logo">
-          2025 졸업전시
+          2026 졸업전시
         </Link>
 
         <ul className="navbar-links">
