@@ -6,5 +6,7 @@ node_modules/
 .vscode/
 *.md
 !README.md
-data/
-**/data/
+data/*
+**/data/*
+!**/src/data/participants.js
+participants_env_value.json
