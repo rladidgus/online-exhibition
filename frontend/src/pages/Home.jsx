@@ -2,10 +2,10 @@ import { Link } from 'react-router-dom'
 import './Home.css'
 
 const CATEGORIES = [
-  { key: '창업', label: '창업', en: 'Startup' },
-  { key: '웹툰', label: '웹툰', en: 'Webtoon' },
-  { key: '영상', label: '영상', en: 'Video' },
-  { key: '게임', label: '게임', en: 'Game' },
+  { key: 'startup', label: '창업', en: 'Startup' },
+  { key: 'webtoon', label: '웹툰', en: 'Webtoon' },
+  { key: 'video', label: '영상', en: 'Video' },
+  { key: 'game', label: '게임', en: 'Game' },
 ]
 
 export default function Home() {
@@ -39,7 +39,7 @@ export default function Home() {
           <div className="category-grid">
             {CATEGORIES.map((cat, i) => (
               <Link
-                to={`/works?category=${cat.key}`}
+                to={`/works?part=${cat.key}`}
                 key={cat.key}
                 className={`category-card bounce delay-${i + 3}`}
               >

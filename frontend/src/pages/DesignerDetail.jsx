@@ -37,7 +37,7 @@ export default function DesignerDetail() {
           <p className="designer-works-empty">
             등록된 작품이 아직 없습니다.
           </p>
-          <Link to={`/works?category=${part.label}`} className="btn-primary">
+          <Link to={`/works?part=${partSlug}`} className="btn-primary">
             {part.label} 파트 작품 보기
           </Link>
         </section>

@@ -9,4 +9,6 @@ node_modules/
 data/*
 **/data/*
 !**/src/data/participants.js
+!**/src/data/parts.js
+!**/src/data/works.js
 participants_env_value.json

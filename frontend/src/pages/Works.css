@@ -38,12 +38,15 @@
   color: var(--color-text-secondary);
 }
 
+.works-filters {
+  margin-bottom: 48px;
+}
+
 .works-toolbar {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  margin-bottom: 48px;
   flex-wrap: wrap;
 }
 

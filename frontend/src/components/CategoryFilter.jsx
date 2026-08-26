@@ -1,11 +1,10 @@
+import { PARTS } from '../data/parts'
 import './CategoryFilter.css'
 
+// 파트 필터 — key 는 파트 slug (URL ?part= 와 동일)
 const CATEGORIES = [
   { key: 'all', label: '전체' },
-  { key: '창업', label: '창업' },
-  { key: '웹툰', label: '웹툰' },
-  { key: '영상', label: '영상' },
-  { key: '게임', label: '게임' },
+  ...PARTS.map(part => ({ key: part.slug, label: part.label })),
 ]
 
 export default function CategoryFilter({ active, onChange }) {
