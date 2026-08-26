@@ -1,0 +1,137 @@
+.viewer-page {
+  min-height: 100vh;
+  background: #f4f4f4;
+}
+
+/* 상단 바 — 네비 바로 아래 고정 */
+.viewer-bar {
+  position: sticky;
+  top: var(--nav-height);
+  z-index: 10;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.viewer-bar-inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 12px 40px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.viewer-back {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+  white-space: nowrap;
+}
+
+.viewer-back:hover {
+  color: var(--color-accent);
+}
+
+.viewer-heading {
+  flex: 1;
+  min-width: 0;
+}
+
+.viewer-work {
+  font-size: 12px;
+  color: var(--color-text-secondary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.viewer-title {
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.viewer-title span {
+  font-weight: 500;
+  color: var(--color-text-secondary);
+}
+
+.viewer-bar-nav {
+  display: flex;
+  gap: 6px;
+}
+
+.viewer-bar-nav .btn-ghost {
+  padding: 8px 14px;
+  font-size: 12px;
+  background: #ffffff;
+}
+
+/* 원고 — 붙여서 흐르게 */
+.viewer-pages {
+  max-width: 720px;
+  margin: 0 auto;
+  background: #ffffff;
+}
+
+.viewer-pages img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.viewer-nav {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  padding: 40px 20px 80px;
+  flex-wrap: wrap;
+}
+
+.viewer-nav .btn-ghost {
+  background: #ffffff;
+}
+
+.is-off {
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+.viewer-empty {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 60px 40px;
+  font-size: 15px;
+  color: var(--color-text-secondary);
+}
+
+.viewer-empty .detail-back {
+  display: inline-block;
+  margin-bottom: 24px;
+}
+
+@media (max-width: 768px) {
+  .viewer-bar-inner {
+    padding: 10px 20px;
+    gap: 12px;
+  }
+
+  .viewer-bar-nav {
+    display: none;
+  }
+
+  .viewer-title {
+    font-size: 14px;
+  }
+
+  .viewer-empty {
+    padding: 40px 20px;
+  }
+}

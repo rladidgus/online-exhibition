@@ -118,16 +118,18 @@ export default function WorkDetail() {
           )}
         </div>
 
-        {/* 회차 (웹툰) — 뷰어 라우트 /works/:slug/ep/:no 는 다음 작업에서 연결 */}
+        {/* 회차 (웹툰) */}
         {episodes.length > 0 && (
           <section className="detail-episodes">
             <h2 className="detail-section-title">회차 <span>{episodes.length}</span></h2>
             <ul className="episode-list">
               {episodes.map(ep => (
                 <li key={ep.no} className="episode-item">
-                  <span className="episode-no">{ep.no}화</span>
-                  <span className="episode-title">{ep.title}</span>
-                  <span className="episode-pages">{ep.pages.length}장</span>
+                  <Link to={`/works/${work.slug}/ep/${ep.no}`} className="episode-link">
+                    <span className="episode-no">{ep.no}화</span>
+                    <span className="episode-title">{ep.title}</span>
+                    <span className="episode-pages">{ep.pages.length}장</span>
+                  </Link>
                 </li>
               ))}
             </ul>

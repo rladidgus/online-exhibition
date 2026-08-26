@@ -33,6 +33,7 @@ export default function Navbar() {
     { to: '/', label: 'Home' },
     { to: '/works', label: 'Works' },
     { to: '/designers', label: 'Designers' },
+    { to: '/search', label: 'Search' },
   ]
 
   return (
