@@ -27,5 +27,4 @@ dist-ssr
 data/*
 src/data/*
 !src/data/participants.js
-!src/data/parts.js
-!src/data/works.js
+!src/data/*.js
