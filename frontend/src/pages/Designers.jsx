@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { PARTS, PARTICIPANTS, ALL_PARTICIPANTS } from '../data/participants'
+import { PARTS, PARTICIPANTS, ALL_PARTICIPANTS, sortByName } from '../data/participants'
 import '../styles/part-list.css'
 import './Designers.css'
 
@@ -14,7 +14,8 @@ export default function Designers() {
       </div>
 
       {PARTS.map(part => {
-        const people = PARTICIPANTS[part.slug]
+        // 표시 순서만 이름순. id는 주소 키라 그대로 둔다
+        const people = sortByName(PARTICIPANTS[part.slug])
         return (
           <section className="part-section" key={part.slug}>
             <div className="part-header">

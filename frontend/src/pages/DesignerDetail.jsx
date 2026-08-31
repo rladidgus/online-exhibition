@@ -1,5 +1,6 @@
 import { useParams, Link } from 'react-router-dom'
-import { PARTICIPANTS, findParticipant, getPart } from '../data/participants'
+import { PARTICIPANTS, findParticipant, getPart, sortByName } from '../data/participants'
+import { SITE } from '../data/site'
 import './DesignerDetail.css'
 
 export default function DesignerDetail() {
@@ -19,7 +20,7 @@ export default function DesignerDetail() {
 
   const partSlug = id.split('-')[0]
   const part = getPart(partSlug)
-  const others = PARTICIPANTS[partSlug].filter(p => p.id !== person.id)
+  const others = sortByName(PARTICIPANTS[partSlug].filter(p => p.id !== person.id))
 
   return (
     <main className="designer-detail page-offset">
@@ -29,7 +30,7 @@ export default function DesignerDetail() {
         <header className="designer-detail-header">
           <span className="designer-detail-part">{part.label}</span>
           <h1 className="designer-detail-name">{person.name}</h1>
-          <p className="designer-detail-major">{person.major}</p>
+          <p className="designer-detail-major">{SITE.major_label}</p>
         </header>
 
         <section className="designer-works">

@@ -36,3 +36,8 @@ export function findParticipant(id) {
 export function getPart(slug) {
   return PARTS.find(p => p.slug === slug)
 }
+
+// 이름 가나다순 정렬 (원본 배열은 그대로 둔다)
+export function sortByName(list) {
+  return [...list].sort((a, b) => a.name.localeCompare(b.name, 'ko'))
+}

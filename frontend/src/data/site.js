@@ -1,12 +1,14 @@
-// 사이트 전역 설정 — 메인 페이지 5요소 (포스터 · 기획의도 · 전시기간/오시는 길 · 오프닝 영상 · SNS)
-// 필드명은 DB site_settings 컬럼과 동일. 지금은 더미([ ] 표시는 준비위 제출분으로 채울 자리), 이후 관리자에서 수정.
+// 메인 페이지 전역 설정. 필드명은 DB site_settings 컬럼과 동일.
+// [ ] 표시는 준비위 제출분으로 채울 자리.
 
 export const SITE = {
   exhibition_title: '2026 졸업전시',
   department_name: '백석대학교 영상애니메이션과',
+  // 참여자 전공 표기는 이 값으로 통일
+  major_label: '영상애니메이션전공',
   slogan: '우리의 작품을\n세상에 선보입니다',
 
-  // 포스터 (더미 — picsum)
+  // 포스터
   poster_path: 'https://picsum.photos/seed/poster-2026/800/1131',
 
   // 기획의도
@@ -23,10 +25,10 @@ export const SITE = {
   venue_map_url: 'https://map.naver.com/',
   venue_directions: '[교통편 안내 — 예: 지하철 O호선 OO역 O번 출구 도보 5분. 별도 주차 공간이 없어 대중교통 이용을 권합니다.]',
 
-  // 오프닝 영상 (유튜브/비메오 URL, 없으면 빈 문자열 → 섹션 숨김)
+  // 오프닝 영상 (없으면 섹션 숨김)
   opening_video_url: 'https://www.youtube.com/watch?v=aqz-KE-bpKQ',
 
-  // SNS (없으면 빈 문자열 → 링크 숨김)
+  // SNS (없으면 링크 숨김)
   sns_instagram: 'https://instagram.com/',
   sns_x: '',
 }

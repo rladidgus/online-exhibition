@@ -134,7 +134,7 @@ export default function Home() {
 
       {/* CTA */}
       <section className="home-cta">
-        <div className="home-cta-inner tline">
+        <div className="home-cta-inner">
           <h2 className="home-cta-title">모든 작품을 한눈에</h2>
           <Link to="/works" className="btn-primary">전체 작품 보기</Link>
         </div>

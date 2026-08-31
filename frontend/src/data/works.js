@@ -1,20 +1,5 @@
-// 작품 데이터 — 필드명은 DB(works / work_authors / work_media / episodes) 컬럼과 동일하게 snake_case
-//
-// {
-//   slug          : URL 조각 = 제출번호 소문자 (w01, v03 ...) — 제목이 바뀌어도 주소 고정
-//   part_slug     : startup | webtoon | video | game   (data/parts.js)
-//   title
-//   genres        : 파트 장르 어휘 중 0..N개 (해시태그)
-//   synopsis      : 시놉시스 / 기획의도
-//   world_setting : 세계관 (창업·게임만, 그 외 null)
-//   cover_path    : 대표 이미지
-//   sort_order
-//   authors       : [{ name, role, contact_type, contact_url }]   팀 작품이면 여러 명
-//   media         : [{ kind: 'image', path } | { kind: 'video', video_url }, caption?]  배열 순서 = 노출 순서
-//   episodes      : 웹툰만. [{ no, title, thumb_path, pages: [path...] }]
-// }
-//
-// 지금은 더미. 실제 자료 취합 후 교체하고, 이후엔 빌드 시 DB에서 내려받아 채운다.
+// 작품 데이터 (지금은 더미, 자료 취합 후 교체)
+// 필드명은 DB 컬럼과 같은 snake_case. slug = 제출번호 소문자, world_setting은 창업·게임만, episodes는 웹툰만.
 
 // 더미 이미지 — picsum seed 라 slug 별로 고정
 const cover = (slug) => `https://picsum.photos/seed/${slug}/800/600`
