@@ -145,6 +145,17 @@ export function authorNames(work) {
 // 카드 표기용 — 2명까지는 다 쓰고 그 이상은 "외 N명"
 export function formatAuthors(work) {
   const names = authorNames(work)
-  if (names.length <= 2) return names.join(', ')
-  return `${names[0]} 외 ${names.length - 1}명`
+  if (names.length <= 3) return names.join(' · ')
+  return `${names.slice(0, 2).join(' · ')} 외 ${names.length - 2}명`
+}
+
+// 작가 이름 가나다순 정렬본을 새 배열로 반환 (졸준위 요청)
+export function sortByAuthor(works) {
+  return [...works].sort((a, b) =>
+    authorNames(a)[0].localeCompare(authorNames(b)[0], 'ko'))
+}
+
+// 참여자 이름으로 그 사람의 작품을 찾는다 (Designers 썸네일·팀 표기용)
+export function worksByAuthor(name) {
+  return WORKS.filter(w => authorNames(w).includes(name))
 }

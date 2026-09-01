@@ -1,5 +1,5 @@
 import { useParams, Link } from 'react-router-dom'
-import { PARTICIPANTS, findParticipant, getPart, sortByName } from '../data/participants'
+import { PARTICIPANTS, findParticipant, getPart, sortByName, DUPLICATE_NAMES } from '../data/participants'
 import { SITE } from '../data/site'
 import './DesignerDetail.css'
 
@@ -30,6 +30,9 @@ export default function DesignerDetail() {
         <header className="designer-detail-header">
           <span className="designer-detail-part">{part.label}</span>
           <h1 className="designer-detail-name">{person.name}</h1>
+          {DUPLICATE_NAMES.has(person.name) && person.student_id && (
+            <p className="designer-detail-sid">{person.student_id}</p>
+          )}
           <p className="designer-detail-major">{SITE.major_label}</p>
         </header>
 

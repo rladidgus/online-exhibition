@@ -4,7 +4,7 @@ import CategoryFilter from '../components/CategoryFilter'
 import GenreFilter from '../components/GenreFilter'
 import WorkCard from '../components/WorkCard'
 import { PARTS, getPart } from '../data/parts'
-import { WORKS, authorNames } from '../data/works'
+import { WORKS, authorNames, sortByAuthor } from '../data/works'
 import '../styles/part-list.css'
 import './Works.css'
 
@@ -36,7 +36,7 @@ export default function Works() {
   // 파트별 섹션 — 결과가 있는 파트만
   const sections = PARTS
     .filter(p => !part || p.slug === part.slug)
-    .map(p => ({ ...p, works: WORKS.filter(w => w.part_slug === p.slug && matches(w)) }))
+    .map(p => ({ ...p, works: sortByAuthor(WORKS.filter(w => w.part_slug === p.slug && matches(w))) }))
     .filter(section => section.works.length > 0)
 
   const total = sections.reduce((sum, s) => sum + s.works.length, 0)

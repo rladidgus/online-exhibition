@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
-import { PARTS, PARTICIPANTS, ALL_PARTICIPANTS, sortByName } from '../data/participants'
-import '../styles/part-list.css'
+import { PARTS, PARTICIPANTS, ALL_PARTICIPANTS, DUPLICATE_NAMES, sortByName } from '../data/participants'
+import { worksByAuthor } from '../data/works'
 import './Designers.css'
 
 export default function Designers() {
@@ -24,14 +24,30 @@ export default function Designers() {
               <span className="part-count">{people.length}명</span>
             </div>
 
-            <ul className="part-name-list">
-              {people.map(person => (
-                <li key={person.id}>
-                  <Link to={`/designers/${person.id}`} className="part-name">
-                    {person.name}
-                  </Link>
-                </li>
-              ))}
+            <ul className="designer-grid">
+              {people.map(person => {
+                const works = worksByAuthor(person.name)
+                const thumb = works[0]?.cover_path
+                const isTeam = works.some(w => w.authors.length > 1)
+                return (
+                  <li key={person.id}>
+                    <Link to={`/designers/${person.id}`} className="designer-card">
+                      <div className="designer-thumb">
+                        {thumb
+                          ? <img src={thumb} alt="" loading="lazy" />
+                          : <span className="designer-thumb-blank">{person.name.slice(0, 1)}</span>}
+                      </div>
+                      <span className="designer-card-name">
+                        {person.name}
+                        {isTeam && <span className="designer-card-team">팀</span>}
+                      </span>
+                      {DUPLICATE_NAMES.has(person.name) && person.student_id && (
+                        <span className="designer-card-sid">{person.student_id}</span>
+                      )}
+                    </Link>
+                  </li>
+                )
+              })}
             </ul>
           </section>
         )

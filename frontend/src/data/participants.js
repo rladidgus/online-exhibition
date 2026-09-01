@@ -41,3 +41,8 @@ export function getPart(slug) {
 export function sortByName(list) {
   return [...list].sort((a, b) => a.name.localeCompare(b.name, 'ko'))
 }
+
+// 같은 이름이 둘 이상인 참여자 (구분 표기가 필요한 대상)
+export const DUPLICATE_NAMES = new Set(
+  ALL_PARTICIPANTS.map(p => p.name).filter((n, i, arr) => arr.indexOf(n) !== i)
+)
