@@ -1,6 +1,8 @@
 import { useParams, Link } from 'react-router-dom'
 import { PARTICIPANTS, findParticipant, getPart, sortByName, DUPLICATE_NAMES } from '../data/participants'
 import { SITE } from '../data/site'
+import { worksByAuthor } from '../data/works'
+import WorkCard from '../components/WorkCard'
 import './DesignerDetail.css'
 
 export default function DesignerDetail() {
@@ -21,6 +23,7 @@ export default function DesignerDetail() {
   const partSlug = id.split('-')[0]
   const part = getPart(partSlug)
   const others = sortByName(PARTICIPANTS[partSlug].filter(p => p.id !== person.id))
+  const works = worksByAuthor(person.name)
 
   return (
     <main className="designer-detail page-offset">
@@ -37,10 +40,24 @@ export default function DesignerDetail() {
         </header>
 
         <section className="designer-works">
-          <h2 className="designer-works-title">Works</h2>
-          <p className="designer-works-empty">
-            등록된 작품이 아직 없습니다.
-          </p>
+          <h2 className="designer-works-title">
+            Works {works.length > 0 && <span>{works.length}</span>}
+          </h2>
+
+          {works.length > 0 ? (
+            <ul className="designer-works-grid">
+              {works.map(work => (
+                <li key={work.slug}>
+                  <WorkCard work={work} />
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p className="designer-works-empty">
+              작품이 아직 등록되지 않았습니다.
+            </p>
+          )}
+
           <Link to={`/works?part=${partSlug}`} className="btn-primary">
             {part.label} 파트 작품 보기
           </Link>
