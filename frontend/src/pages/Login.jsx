@@ -20,8 +20,8 @@ export default function Login() {
 
   return (
     <div className="login-container">
-      <h2>소셜 로그인</h2>
-      <p>온라인 전시에 오신 것을 환영합니다!<br/>로그인하고 리뷰와 좋아요를 남겨보세요.</p>
+      <h2>관리자 로그인</h2>
+      <p>졸업준비위원회 관리자 페이지입니다.<br/>등록된 계정으로 로그인해 주세요.</p>
       
       <div className="login-buttons">
         <button 

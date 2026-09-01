@@ -1,23 +1,12 @@
-import { useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { getPart } from '../data/parts'
 import { findWork } from '../data/works'
 import { toEmbedUrl } from '../lib/embed'
 import './WorkDetail.css'
 
-// 리뷰·좋아요 더미 — 유지/삭제는 별도 결정. 그때까지 기존 UI 그대로 둠
-const DUMMY_REVIEWS = [
-  { id: 1, author: '관람객A', content: '정말 인상 깊은 작품이었습니다.', created_at: '2025-02-10' },
-  { id: 2, author: '관람객B', content: '아이디어가 신선하네요!', created_at: '2025-02-11' },
-]
-
 export default function WorkDetail() {
   const { slug } = useParams()
   const work = findWork(slug)
-  const [liked, setLiked] = useState(false)
-  const [likeCount, setLikeCount] = useState(12)
-  const [review, setReview] = useState('')
-  const [reviews, setReviews] = useState(DUMMY_REVIEWS)
 
   if (!work) {
     return (
@@ -32,23 +21,6 @@ export default function WorkDetail() {
 
   const part = getPart(work.part_slug)
   const episodes = work.episodes ?? []
-
-  const handleLike = () => {
-    setLiked(prev => !prev)
-    setLikeCount(prev => liked ? prev - 1 : prev + 1)
-  }
-
-  const handleReviewSubmit = (e) => {
-    e.preventDefault()
-    if (!review.trim()) return
-    setReviews(prev => [...prev, {
-      id: Date.now(),
-      author: '나',
-      content: review,
-      created_at: new Date().toISOString().slice(0, 10)
-    }])
-    setReview('')
-  }
 
   return (
     <main className="detail-page page-offset">
@@ -65,12 +37,6 @@ export default function WorkDetail() {
         <div className="detail-content">
           <div className="detail-meta">
             <span className="detail-category">{part.label}</span>
-            <button
-              className={`detail-like ${liked ? 'liked' : ''}`}
-              onClick={handleLike}
-            >
-              {liked ? '♥' : '♡'} {likeCount}
-            </button>
           </div>
           <h1 className="detail-title">{work.title}</h1>
 
@@ -160,34 +126,6 @@ export default function WorkDetail() {
             ))}
           </section>
         )}
-
-        {/* 리뷰 (기존 UI 유지) */}
-        <div className="detail-reviews">
-          <h2 className="reviews-title">Reviews <span>{reviews.length}</span></h2>
-
-          <form className="review-form" onSubmit={handleReviewSubmit}>
-            <input
-              className="review-input"
-              type="text"
-              placeholder="감상을 남겨주세요"
-              value={review}
-              onChange={e => setReview(e.target.value)}
-            />
-            <button className="review-submit" type="submit">등록</button>
-          </form>
-
-          <ul className="review-list">
-            {reviews.map(r => (
-              <li key={r.id} className="review-item">
-                <div className="review-header">
-                  <span className="review-author">{r.author}</span>
-                  <span className="review-date">{r.created_at}</span>
-                </div>
-                <p className="review-content">{r.content}</p>
-              </li>
-            ))}
-          </ul>
-        </div>
       </div>
     </main>
   )
