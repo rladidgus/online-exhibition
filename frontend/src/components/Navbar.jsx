@@ -34,6 +34,7 @@ export default function Navbar() {
     { to: '/works', label: 'Works' },
     { to: '/designers', label: 'Designers' },
     { to: '/search', label: 'Search' },
+    { to: '/guestbook', label: 'Guestbook' },
   ]
 
   return (
