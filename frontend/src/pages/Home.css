@@ -18,66 +18,164 @@
   background: #000;
 }
 
-/* Hero */
-.home-hero {
-  min-height: 90vh;
+/* 커버 — 첫 화면 전체 키비주얼 */
+.home-cover {
+  position: relative;
   display: flex;
   align-items: center;
-  padding: 80px 0;
+  min-height: 100vh;
+  min-height: 100svh;
+  padding-top: var(--nav-height);
+  background-color: var(--color-bg);
+  cursor: pointer;
+  overflow: hidden;
 }
 
-.home-hero-inner {
+.home-cover-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* 키비주얼 위 글자 가독성 확보 */
+.home-cover::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    100deg,
+    rgba(255, 255, 255, 0.9) 0%,
+    rgba(255, 255, 255, 0.7) 30%,
+    rgba(255, 255, 255, 0.22) 58%,
+    rgba(255, 255, 255, 0) 80%
+  );
+}
+
+.home-cover-inner {
+  position: relative;
+  z-index: 1;
+  width: 100%;
   max-width: var(--max-width);
   margin: 0 auto;
-  padding: 0 40px;
-  width: 100%;
-  display: grid;
-  grid-template-columns: 1fr minmax(280px, 400px);
-  gap: 60px;
-  align-items: center;
+  padding: 0 40px 100px;
 }
 
-.home-hero-poster img {
-  width: 100%;
-  height: auto;
-  aspect-ratio: 1 / 1.414;
-  object-fit: cover;
-  background: var(--color-hover);
-  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.14);
-}
-
-.home-hero-sub {
+.home-cover-sub {
   font-size: 12px;
   font-weight: 500;
-  color: var(--color-text-secondary);
+  color: rgba(0, 0, 0, 0.6);
   letter-spacing: 1.5px;
   text-transform: uppercase;
   margin-bottom: 28px;
 }
 
-.home-hero-title {
+.home-cover-title {
   white-space: pre-line;
   font-size: clamp(40px, 6vw, 80px);
   font-weight: 700;
   line-height: 1.1;
   letter-spacing: -0.04em;
-  color: var(--color-text);
-  margin-bottom: 28px;
+  margin-bottom: 36px;
   max-width: 700px;
 }
 
-.home-hero-desc {
-  font-size: 16px;
-  line-height: 1.8;
-  color: var(--color-text-secondary);
-  margin-bottom: 48px;
-  max-width: 480px;
+.home-cover-info {
+  font-size: 15px;
+  line-height: 1.7;
 }
 
-.home-hero-actions {
+.home-cover-venue {
+  font-weight: 600;
+}
+
+.home-cover-address {
+  color: rgba(0, 0, 0, 0.65);
+}
+
+.home-cover-period {
+  margin-top: 14px;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  color: rgba(0, 0, 0, 0.65);
+}
+
+.home-cover-enter {
+  position: absolute;
+  left: 50%;
+  bottom: 40px;
+  z-index: 1;
+  transform: translateX(-50%);
   display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  color: rgba(0, 0, 0, 0.55);
+  transition: color 0.2s;
+}
+
+.home-cover-enter:hover {
+  color: var(--color-accent);
+}
+
+.home-cover-arrow {
+  font-size: 16px;
+  animation: coverArrow 1.8s ease-in-out infinite;
+}
+
+@keyframes coverArrow {
+  0%, 100% { transform: translateY(0); opacity: 0.5; }
+  50% { transform: translateY(6px); opacity: 1; }
+}
+
+/* 세로 화면에서는 가로로 긴 키비주얼이 좌우로 잘려 그림을 알아볼 수 없다.
+   잘라내는 대신 원본 비율 그대로 위에 얹고 글자는 그 아래로 내린다. */
+@media (max-aspect-ratio: 5/4) {
+  .home-cover {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .home-cover-image {
+    position: static;
+    height: auto;
+  }
+
+  .home-cover::after {
+    content: none;
+  }
+
+  .home-cover-inner {
+    flex: 1;
+    padding-top: clamp(40px, 7vh, 80px);
+  }
+}
+
+
+/* 화면이 낮을 때(휴대폰 가로 모드 등) 커버가 한 화면을 넘지 않도록 */
+@media (max-height: 700px) {
+  .home-cover-sub {
+    margin-bottom: 16px;
+  }
+
+  .home-cover-title {
+    font-size: clamp(28px, 5vw, 44px);
+    margin-bottom: 20px;
+  }
+
+  .home-cover-inner {
+    padding-bottom: 72px;
+  }
+
+  .home-cover-enter {
+    bottom: 20px;
+  }
 }
 
 .btn-primary {
@@ -365,11 +463,6 @@
 
 /* Responsive */
 @media (max-width: 1024px) {
-  .home-hero-inner {
-    grid-template-columns: 1fr 300px;
-    gap: 40px;
-  }
-
   .home-visit-inner {
     grid-template-columns: 1fr;
     gap: 40px;
@@ -394,24 +487,13 @@
 }
 
 @media (max-width: 768px) {
-  .home-hero-inner,
   .home-categories-inner,
   .home-cta-inner {
     padding: 0 20px;
   }
 
-  .home-hero {
-    min-height: 0;
-    padding: 40px 0 60px;
-  }
-
-  .home-hero-inner {
-    grid-template-columns: 1fr;
-    gap: 40px;
-  }
-
-  .home-hero-poster {
-    max-width: 320px;
+  .home-cover-inner {
+    padding: 0 20px 96px;
   }
 
   .home-intro,

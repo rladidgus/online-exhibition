@@ -10,28 +10,42 @@ export default function Home() {
   const openingEmbed = toEmbedUrl(SITE.opening_video_url)
   const introParagraphs = SITE.intro_body.split('\n\n')
 
+  // 첫 화면(커버)을 클릭하면 본문 시작 지점으로 이동
+  const enter = () => {
+    document.getElementById('start')?.scrollIntoView({ behavior: 'smooth' })
+  }
+
   return (
-    <main className="home page-offset">
-      {/* Hero — 전시 기본 정보 + 포스터 */}
-      <section className="home-hero">
-        <div className="home-hero-inner">
-          <div className="home-hero-text">
-            <p className="home-hero-sub bounce delay-1">{SITE.department_name} · {period}</p>
-            <h1 className="home-hero-title bounce delay-2">{SITE.slogan}</h1>
-            <p className="home-hero-desc bounce delay-3">{SITE.intro_title}</p>
-            <div className="home-hero-actions bounce delay-4">
-              <Link to="/works" className="btn-primary">작품 보러가기</Link>
-              <a href="#visit" className="btn-ghost">오시는 길</a>
-            </div>
-          </div>
-          <div className="home-hero-poster bounce delay-3">
-            <img src={SITE.poster_path} alt={`${SITE.exhibition_title} 포스터`} fetchPriority="high" />
+    <main className="home">
+      {/* 커버 — 전체 화면 키비주얼. 클릭하면 본문으로 */}
+      <section className="home-cover" onClick={enter}>
+        <img
+          className="home-cover-image"
+          src={SITE.cover_path}
+          alt={`${SITE.exhibition_title} 키비주얼`}
+          fetchPriority="high"
+        />
+
+        <div className="home-cover-inner">
+          <p className="home-cover-sub bounce delay-1">
+            {SITE.exhibition_title} · {SITE.department_name}
+          </p>
+          <h1 className="home-cover-title bounce delay-2">{SITE.slogan}</h1>
+          <div className="home-cover-info bounce delay-3">
+            <p className="home-cover-venue">{SITE.venue_name}</p>
+            <p className="home-cover-address">{SITE.venue_address}</p>
+            <p className="home-cover-period">{period}</p>
           </div>
         </div>
+
+        <button className="home-cover-enter" type="button" onClick={enter}>
+          <span>ENTER</span>
+          <span className="home-cover-arrow">↓</span>
+        </button>
       </section>
 
       {/* 기획의도 */}
-      <section className="home-intro">
+      <section className="home-intro" id="start">
         <div className="home-intro-inner tline">
           <div className="section-header">
             <span className="section-label">Statement</span>

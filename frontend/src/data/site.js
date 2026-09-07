@@ -8,8 +8,8 @@ export const SITE = {
   major_label: '영상애니메이션전공',
   slogan: '우리의 작품을\n세상에 선보입니다',
 
-  // 포스터
-  poster_path: 'https://picsum.photos/seed/poster-2026/800/1131',
+  // 첫 화면 배경 키비주얼 (public/ 기준 경로)
+  cover_path: '/kv-2026.jpg',
 
   // 기획의도
   intro_title: '우리는 각자의 방식으로 세계를 만들었다',
