@@ -159,3 +159,11 @@ export function sortByAuthor(works) {
 export function worksByAuthor(name) {
   return WORKS.filter(w => authorNames(w).includes(name))
 }
+
+// 작품 상세 옆 추천 — 같은 파트 먼저, 모자라면 다른 파트로 채운다
+export function relatedWorks(work, limit = 6) {
+  const others = WORKS.filter(w => w.slug !== work.slug)
+  const same = others.filter(w => w.part_slug === work.part_slug)
+  const rest = others.filter(w => w.part_slug !== work.part_slug)
+  return [...same, ...rest].slice(0, limit)
+}

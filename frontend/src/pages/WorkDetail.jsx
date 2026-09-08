@@ -1,7 +1,8 @@
 import { useParams, Link } from 'react-router-dom'
 import { getPart } from '../data/parts'
-import { findWork } from '../data/works'
+import { findWork, relatedWorks } from '../data/works'
 import { toEmbedUrl } from '../lib/embed'
+import WorkCard from '../components/WorkCard'
 import './WorkDetail.css'
 
 export default function WorkDetail() {
@@ -21,35 +22,18 @@ export default function WorkDetail() {
 
   const part = getPart(work.part_slug)
   const episodes = work.episodes ?? []
+  const related = relatedWorks(work)
 
   return (
     <main className="detail-page page-offset">
+      <div className="detail-layout">
       <div className="detail-inner">
         {/* 뒤로가기 — 같은 파트 목록으로 */}
         <Link to={`/works?part=${work.part_slug}`} className="detail-back">← {part.label}</Link>
 
-        {/* 대표 이미지 */}
-        <div className="detail-image">
-          <img src={work.cover_path} alt={work.title} />
-        </div>
-
-        {/* 정보 */}
-        <div className="detail-content">
-          <div className="detail-meta">
-            <span className="detail-category">{part.label}</span>
-          </div>
-          <h1 className="detail-title">{work.title}</h1>
-
-          {work.genres.length > 0 && (
-            <ul className="detail-genres">
-              {work.genres.map(genre => (
-                <li key={genre}>
-                  <Link to={`/works?part=${work.part_slug}&genre=${genre}`}>#{genre}</Link>
-                </li>
-              ))}
-            </ul>
-          )}
-
+        {/* 작가 이름이 먼저, 그 아래 작품, 그 아래 작품명 (졸준위 요청) */}
+        <header className="detail-head">
+          <span className="detail-category">{part.label}</span>
           <ul className="detail-authors">
             {work.authors.map(author => (
               <li key={author.name} className="detail-author">
@@ -68,6 +52,26 @@ export default function WorkDetail() {
               </li>
             ))}
           </ul>
+        </header>
+
+        {/* 대표 이미지 */}
+        <div className="detail-image">
+          <img src={work.cover_path} alt={work.title} />
+        </div>
+
+        {/* 정보 */}
+        <div className="detail-content">
+          <h1 className="detail-title">{work.title}</h1>
+
+          {work.genres.length > 0 && (
+            <ul className="detail-genres">
+              {work.genres.map(genre => (
+                <li key={genre}>
+                  <Link to={`/works?part=${work.part_slug}&genre=${genre}`}>#{genre}</Link>
+                </li>
+              ))}
+            </ul>
+          )}
 
           {work.synopsis && (
             <section className="detail-section">
@@ -126,6 +130,21 @@ export default function WorkDetail() {
             ))}
           </section>
         )}
+      </div>
+
+      {/* 다른 참여자 작품 — 같은 파트 우선 */}
+      {related.length > 0 && (
+        <aside className="detail-aside">
+          <h2 className="detail-aside-title">다른 참여자 작품</h2>
+          <ul className="detail-aside-list">
+            {related.map(w => (
+              <li key={w.slug}>
+                <WorkCard work={w} />
+              </li>
+            ))}
+          </ul>
+        </aside>
+      )}
       </div>
     </main>
   )
