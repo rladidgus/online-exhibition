@@ -22,8 +22,10 @@ export default function DesignerDetail() {
 
   const partSlug = id.split('-')[0]
   const part = getPart(partSlug)
-  const others = sortByName(PARTICIPANTS[partSlug].filter(p => p.id !== person.id))
+  // 본인도 목록에 남겨 현재 위치가 보이게 한다
+  const siblings = sortByName(PARTICIPANTS[partSlug])
   const works = worksByAuthor(person.name)
+  const major = person.major === SITE.major_label ? SITE.major_label : '타전공'
 
   return (
     <main className="designer-detail page-offset">
@@ -36,7 +38,7 @@ export default function DesignerDetail() {
           {DUPLICATE_NAMES.has(person.name) && person.student_id && (
             <p className="designer-detail-sid">{person.student_id}</p>
           )}
-          <p className="designer-detail-major">{SITE.major_label}</p>
+          <p className="designer-detail-major">{major}</p>
         </header>
 
         <section className="designer-works">
@@ -63,17 +65,23 @@ export default function DesignerDetail() {
           </Link>
         </section>
 
-        {others.length > 0 && (
+        {siblings.length > 1 && (
           <section className="designer-siblings">
             <h2 className="designer-siblings-title">
-              같은 파트 참여자 <span>{others.length}</span>
+              같은 파트 참여자 <span>{siblings.length}</span>
             </h2>
             <ul className="designer-siblings-list">
-              {others.map(p => (
+              {siblings.map(p => (
                 <li key={p.id}>
-                  <Link to={`/designers/${p.id}`} className="designer-sibling">
-                    {p.name}
-                  </Link>
+                  {p.id === person.id ? (
+                    <span className="designer-sibling is-current" aria-current="page">
+                      {p.name}
+                    </span>
+                  ) : (
+                    <Link to={`/designers/${p.id}`} className="designer-sibling">
+                      {p.name}
+                    </Link>
+                  )}
                 </li>
               ))}
             </ul>

@@ -143,6 +143,12 @@
   transition: border-color 0.18s ease, color 0.18s ease;
 }
 
+.designer-sibling.is-current {
+  background: var(--color-text);
+  color: #ffffff;
+  border-color: var(--color-text);
+}
+
 .designer-sibling:hover,
 .designer-sibling:focus-visible {
   border-color: var(--color-accent);
