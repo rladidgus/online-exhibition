@@ -26,6 +26,34 @@ export async function submitComment(slug, nickname, content) {
   if (error) throw new Error('등록에 실패했습니다. 잠시 후 다시 시도해 주세요.')
 }
 
+// 내가 쓴 승인 대기 댓글 — 이 브라우저에만 기억해 두고 '승인 후 게시' 표시로 보여 준다.
+// 승인돼서 목록에 같은 글이 올라오거나 2주가 지나면 지운다.
+const pendingKey = slug => `pending-comments:${slug}`
+const PENDING_DAYS = 14
+
+export function loadPending(slug, approved = []) {
+  try {
+    const list = JSON.parse(localStorage.getItem(pendingKey(slug)) ?? '[]')
+    const cutoff = Date.now() - PENDING_DAYS * 86400000
+    const left = list.filter(p =>
+      new Date(p.created_at).getTime() > cutoff
+      && !approved.some(a => a.nickname === p.nickname && a.content === p.content))
+    if (left.length !== list.length) localStorage.setItem(pendingKey(slug), JSON.stringify(left))
+    return left
+  } catch {
+    return []
+  }
+}
+
+export function savePending(slug, comment) {
+  try {
+    const list = JSON.parse(localStorage.getItem(pendingKey(slug)) ?? '[]')
+    localStorage.setItem(pendingKey(slug), JSON.stringify([comment, ...list]))
+  } catch {
+    // 저장소를 못 쓰면 새로고침 전까지만 보인다
+  }
+}
+
 export async function fetchLikes(slug) {
   const { data, error } = await supabase
     .from('work_likes')

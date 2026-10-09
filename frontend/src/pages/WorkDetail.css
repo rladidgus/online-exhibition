@@ -5,17 +5,10 @@
   padding: calc(var(--nav-height) + 60px) 40px 100px;
 }
 
-/* 본문 + 우측 추천 */
-.detail-layout {
-  display: grid;
-  grid-template-columns: minmax(0, 840px) 260px;
-  gap: 64px;
-  align-items: start;
-}
-
+/* 본문 한 단 — 다른 참여자 작품은 맨 아래 (오른쪽 칸은 감상에 방해된다는 피드백으로 없앰) */
 .detail-inner {
-  max-width: 840px;
-  min-width: 0;
+  max-width: 1000px;
+  margin: 0 auto;
 }
 
 .detail-back {
@@ -269,13 +262,8 @@
   color: var(--color-text-secondary);
 }
 
-/* 우측 추천 */
-.detail-aside {
-  position: sticky;
-  top: calc(var(--nav-height) + 40px);
-}
-
-.detail-aside-title {
+/* 다른 참여자 작품 — 맨 아래 한 줄 */
+.detail-related-title {
   font-size: 14px;
   font-weight: 700;
   letter-spacing: -0.02em;
@@ -284,28 +272,11 @@
   margin-bottom: 20px;
 }
 
-.detail-aside-list {
+.detail-related-list {
   list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 28px;
-}
-
-@media (max-width: 1024px) {
-  .detail-layout {
-    grid-template-columns: 1fr;
-    gap: 40px;
-  }
-
-  .detail-aside {
-    position: static;
-  }
-
-  .detail-aside-list {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 24px 20px;
-  }
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px 20px;
 }
 
 @media (max-width: 768px) {
@@ -317,7 +288,7 @@
     font-size: 22px;
   }
 
-  .detail-aside-list {
+  .detail-related-list {
     grid-template-columns: repeat(2, 1fr);
   }
 
@@ -438,8 +409,9 @@
 }
 
 .review-notice {
-  font-size: 12px;
-  color: var(--color-text-secondary);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-text);
   margin-bottom: 32px;
 }
 
@@ -468,6 +440,16 @@
 
 .review-date {
   font-size: 12px;
+  color: var(--color-text-secondary);
+}
+
+.review-pending {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-accent);
+}
+
+.review-item--pending .review-content {
   color: var(--color-text-secondary);
 }
 
