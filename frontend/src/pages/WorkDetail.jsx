@@ -3,6 +3,8 @@ import { getPart } from '../data/parts'
 import { findWork, relatedWorks } from '../data/works'
 import { toEmbedUrl } from '../lib/embed'
 import WorkCard from '../components/WorkCard'
+import LikeButton from '../components/LikeButton'
+import WorkComments from '../components/WorkComments'
 import './WorkDetail.css'
 
 export default function WorkDetail() {
@@ -61,7 +63,10 @@ export default function WorkDetail() {
 
         {/* 정보 */}
         <div className="detail-content">
-          <h1 className="detail-title">{work.title}</h1>
+          <div className="detail-title-row">
+            <h1 className="detail-title">{work.title}</h1>
+            <LikeButton slug={work.slug} />
+          </div>
 
           {work.genres.length > 0 && (
             <ul className="detail-genres">
@@ -130,6 +135,9 @@ export default function WorkDetail() {
             ))}
           </section>
         )}
+
+        {/* 댓글 — 준비위 승인 후 공개 */}
+        <WorkComments slug={work.slug} />
       </div>
 
       {/* 다른 참여자 작품 — 같은 파트 우선 */}

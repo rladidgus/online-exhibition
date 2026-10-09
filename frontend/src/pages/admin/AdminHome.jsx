@@ -13,8 +13,8 @@ export default function AdminHome() {
   const [busy, setBusy] = useState(false)
 
   useEffect(() => {
-    Promise.all([listWorks(), listGuestbook(), listParts()])
-      .then(([works, guestbook, parts]) => setData({ works, guestbook, parts }))
+    Promise.all([listWorks(), listGuestbook(), listGuestbook('work_comments'), listParts()])
+      .then(([works, guestbook, comments, parts]) => setData({ works, guestbook: [...guestbook, ...comments], parts }))
       .catch(err => notify(errorText(err, '불러오지 못했습니다.'), 'err'))
   }, [notify])
 
@@ -60,7 +60,7 @@ export default function AdminHome() {
           <p style={subStyle}>공개로 표시한 작품 / 전체 작품</p>
         </div>
         <div className="a-card">
-          <p className="a-card__title">방명록 대기</p>
+          <p className="a-card__title">방명록 · 댓글 대기</p>
           <p style={statStyle}>{data ? pending : '–'}</p>
           <p style={subStyle}><Link to="/admin/guestbook">확인하러 가기</Link></p>
         </div>

@@ -245,22 +245,25 @@ export async function imageUrl(path) {
 
 // ---- 방명록 ----
 
-export async function listGuestbook() {
-  const { data, error } = await supabase.from('guestbook').select('*').order('created_at', { ascending: false })
-  fail('방명록을 불러오지 못했습니다', error)
+// 방명록(guestbook)과 작품 댓글(work_comments)은 같은 승인 규칙이라 표 이름만 바꿔 쓴다
+export const FEEDBACK_TABLES = { guestbook: 'guestbook', comments: 'work_comments' }
+
+export async function listGuestbook(table = 'guestbook') {
+  const { data, error } = await supabase.from(table).select('*').order('created_at', { ascending: false })
+  fail('글 목록을 불러오지 못했습니다', error)
   return data
 }
 
-export async function setGuestbookStatus(id, status) {
-  const { error } = await supabase.from('guestbook').update({
+export async function setGuestbookStatus(id, status, table = 'guestbook') {
+  const { error } = await supabase.from(table).update({
     status,
     approved_at: status === 'approved' ? new Date().toISOString() : null,
   }).eq('id', id)
   fail('상태를 바꾸지 못했습니다', error)
 }
 
-export async function deleteGuestbookEntry(id) {
-  const { error } = await supabase.from('guestbook').delete().eq('id', id)
+export async function deleteGuestbookEntry(id, table = 'guestbook') {
+  const { error } = await supabase.from(table).delete().eq('id', id)
   fail('삭제하지 못했습니다', error)
 }
 

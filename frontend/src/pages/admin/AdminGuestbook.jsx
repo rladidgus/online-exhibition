@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react'
-import { listGuestbook, setGuestbookStatus, deleteGuestbookEntry } from '../../lib/admin'
+import { FEEDBACK_TABLES, listGuestbook, setGuestbookStatus, deleteGuestbookEntry } from '../../lib/admin'
 import { useNotice, errorText } from './useNotice.js'
 import Notice from './Notice'
 
 const LABEL = { pending: '대기', approved: '승인', hidden: '숨김' }
 const PILL = { pending: 'a-pill--wait', approved: 'a-pill--on', hidden: 'a-pill--off' }
 const TABS = [['pending', '대기'], ['approved', '승인됨'], ['hidden', '숨김'], ['', '전체']]
+const KINDS = [['guestbook', '방명록'], ['comments', '작품 댓글']]
 
 function fmt(iso) {
   const d = new Date(iso)
@@ -13,21 +14,30 @@ function fmt(iso) {
   return `${d.getFullYear()}.${p(d.getMonth() + 1)}.${p(d.getDate())}`
 }
 
+// 방명록과 작품 댓글 승인 화면 (규칙이 같아서 위쪽 버튼으로 바꿔 본다)
 export default function AdminGuestbook() {
   const [msg, notify] = useNotice()
-  const [entries, setEntries] = useState(null)
+  const [kind, setKind] = useState('guestbook')
+  const [loaded, setLoaded] = useState({ kind: null, entries: [] })
   const [filter, setFilter] = useState('pending')
+  const table = FEEDBACK_TABLES[kind]
+  const isComments = kind === 'comments'
+  const entries = loaded.kind === kind ? loaded.entries : null
 
   useEffect(() => {
-    listGuestbook()
-      .then(setEntries)
+    let alive = true
+    listGuestbook(FEEDBACK_TABLES[kind])
+      .then(list => { if (alive) setLoaded({ kind, entries: list }) })
       .catch(err => notify(errorText(err, '불러오지 못했습니다.'), 'err'))
-  }, [notify])
+    return () => { alive = false }
+  }, [kind, notify])
+
+  const update = fn => setLoaded(prev => ({ ...prev, entries: fn(prev.entries) }))
 
   async function change(entry, status) {
     try {
-      await setGuestbookStatus(entry.id, status)
-      setEntries(list => list.map(e => (e.id === entry.id ? { ...e, status } : e)))
+      await setGuestbookStatus(entry.id, status, table)
+      update(list => list.map(e => (e.id === entry.id ? { ...e, status } : e)))
       notify(`${entry.nickname} 님의 글을 ${LABEL[status]} 처리했습니다.`, 'ok')
     } catch (err) {
       notify(errorText(err, '변경에 실패했습니다.'), 'err')
@@ -37,8 +47,8 @@ export default function AdminGuestbook() {
   async function remove(entry) {
     if (!confirm('이 글을 완전히 삭제합니다. 계속할까요?')) return
     try {
-      await deleteGuestbookEntry(entry.id)
-      setEntries(list => list.filter(e => e.id !== entry.id))
+      await deleteGuestbookEntry(entry.id, table)
+      update(list => list.filter(e => e.id !== entry.id))
       notify('삭제했습니다.', 'ok')
     } catch (err) {
       notify(errorText(err, '삭제에 실패했습니다.'), 'err')
@@ -51,8 +61,16 @@ export default function AdminGuestbook() {
     <>
       <div className="a-head">
         <div>
-          <h1>방명록</h1>
+          <h1>방명록 · 작품 댓글</h1>
           <p>관람객이 남긴 글은 승인해야 사이트에 나타납니다. 승인하면 바로 보입니다.</p>
+        </div>
+        <div className="a-actions">
+          {KINDS.map(([key, label]) => (
+            <button key={key} type="button" onClick={() => setKind(key)}
+              className={`a-btn ${kind === key ? 'a-btn--primary' : ''}`}>
+              {label}
+            </button>
+          ))}
         </div>
       </div>
 
@@ -72,6 +90,7 @@ export default function AdminGuestbook() {
           <table className="a-table">
             <thead>
               <tr>
+                {isComments && <th style={{ width: 80 }}>작품</th>}
                 <th style={{ width: 130 }}>닉네임</th>
                 <th>내용</th>
                 <th style={{ width: 100 }}>작성일</th>
@@ -82,6 +101,9 @@ export default function AdminGuestbook() {
             <tbody>
               {rows.map(e => (
                 <tr key={e.id}>
+                  {isComments && (
+                    <td><a href={`/works/${e.work_slug}`} target="_blank" rel="noopener"><code>{e.work_slug.toUpperCase()}</code></a></td>
+                  )}
                   <td><strong>{e.nickname}</strong></td>
                   <td style={{ whiteSpace: 'pre-wrap' }}>{e.content}</td>
                   <td style={{ fontSize: '0.8125rem', color: 'var(--a-ink-2)' }}>{fmt(e.created_at)}</td>
