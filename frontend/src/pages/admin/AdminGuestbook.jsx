@@ -5,7 +5,7 @@ import Notice from './Notice'
 
 const LABEL = { pending: '대기', approved: '승인', hidden: '숨김' }
 const PILL = { pending: 'a-pill--wait', approved: 'a-pill--on', hidden: 'a-pill--off' }
-const TABS = [['pending', '대기'], ['approved', '승인됨'], ['hidden', '숨김'], ['', '전체']]
+const TABS = [['', '전체'], ['pending', '대기'], ['approved', '승인됨'], ['hidden', '숨김']]
 const KINDS = [['guestbook', '방명록'], ['comments', '작품 댓글']]
 
 function fmt(iso) {
@@ -19,7 +19,7 @@ export default function AdminGuestbook() {
   const [msg, notify] = useNotice()
   const [kind, setKind] = useState('guestbook')
   const [loaded, setLoaded] = useState({ kind: null, entries: [] })
-  const [filter, setFilter] = useState('pending')
+  const [filter, setFilter] = useState('')
   const table = FEEDBACK_TABLES[kind]
   const isComments = kind === 'comments'
   const entries = loaded.kind === kind ? loaded.entries : null
