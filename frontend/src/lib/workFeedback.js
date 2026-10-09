@@ -38,10 +38,15 @@ export function loadPending(slug, approved = []) {
   try {
     const list = JSON.parse(localStorage.getItem(pendingKey(slug)) ?? '[]')
     const cutoff = Date.now() - PENDING_DAYS * 86400000
-    const left = list.filter(p =>
-      new Date(p.created_at).getTime() > cutoff
-      && !approved.some(a => a.nickname === p.nickname && a.content === p.content
-        && Math.abs(new Date(a.created_at) - new Date(p.created_at)) < SAME_WRITE_MS))
+    // 승인된 글 하나는 대기 글 하나만 지운다 — 같은 글을 두 번 써서 하나만 승인돼도 나머지는 남게
+    const used = new Set()
+    const isApproved = p => {
+      const a = approved.find(a => !used.has(a) && a.nickname === p.nickname && a.content === p.content
+        && Math.abs(new Date(a.created_at) - new Date(p.created_at)) < SAME_WRITE_MS)
+      if (a) used.add(a)
+      return Boolean(a)
+    }
+    const left = list.filter(p => new Date(p.created_at).getTime() > cutoff && !isApproved(p))
     if (left.length !== list.length) localStorage.setItem(pendingKey(slug), JSON.stringify(left))
     return left
   } catch {
