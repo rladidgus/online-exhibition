@@ -1,5 +1,5 @@
 import { lazy, Suspense } from 'react'
-import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, Navigate, Link, useLocation } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import Home from './pages/Home'
 import Works from './pages/Works'
@@ -19,6 +19,18 @@ function PublicNavbar() {
   return pathname.startsWith('/admin') ? null : <Navbar />
 }
 
+// 없는 주소 — 빈 화면 대신 안내 (작품 상세의 '찾을 수 없음'과 같은 모양)
+function NotFound() {
+  return (
+    <main className="detail-page page-offset">
+      <div className="detail-inner">
+        <Link to="/" className="detail-back">← Home</Link>
+        <p className="detail-empty">페이지를 찾을 수 없습니다. 주소를 다시 확인해 주세요.</p>
+      </div>
+    </main>
+  )
+}
+
 function App() {
   return (
     <BrowserRouter>
@@ -34,6 +46,7 @@ function App() {
         <Route path="/designers/:id" element={<DesignerDetail />} />
         <Route path="/login" element={<Navigate to="/admin" replace />} />
         <Route path="/admin/*" element={<Suspense fallback={null}><AdminRoutes /></Suspense>} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   )
