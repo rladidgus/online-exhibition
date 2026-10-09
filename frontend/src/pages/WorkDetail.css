@@ -443,6 +443,10 @@
   color: var(--color-text-secondary);
 }
 
+.review-notice--error {
+  color: var(--color-accent);
+}
+
 .review-pending {
   font-size: 12px;
   font-weight: 600;

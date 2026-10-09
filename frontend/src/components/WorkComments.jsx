@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { guestbookEnabled } from '../lib/guestbook'
 import { fetchComments, submitComment, loadPending, savePending } from '../lib/workFeedback'
 
@@ -20,6 +20,9 @@ export default function WorkComments({ slug }) {
   const [content, setContent] = useState('')
   const [sending, setSending] = useState(false)
   const [notice, setNotice] = useState('')
+  const [noticeError, setNoticeError] = useState(false)
+  const nameRef = useRef(null)
+  const contentRef = useRef(null)
 
   useEffect(() => {
     if (!enabled) return
@@ -34,9 +37,17 @@ export default function WorkComments({ slug }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    if (!nickname.trim() || !content.trim()) return
+    // 빈 칸이면 무엇을 채워야 하는지 알려 주고 그 칸으로 옮겨 준다
+    const missing = !nickname.trim() ? [nameRef, '이름 또는 별명을 입력해 주세요.'] : !content.trim() ? [contentRef, '감상을 입력해 주세요.'] : null
+    if (missing) {
+      setNotice(missing[1])
+      setNoticeError(true)
+      missing[0].current?.focus()
+      return
+    }
     setSending(true)
     setNotice('')
+    setNoticeError(false)
     try {
       await submitComment(slug, nickname.trim(), content.trim())
       const mine = { id: `mine-${Date.now()}`, nickname: nickname.trim(), content: content.trim(), created_at: new Date().toISOString() }
@@ -46,6 +57,7 @@ export default function WorkComments({ slug }) {
       setNotice('등록되었습니다. 준비위원회 확인 후 모두에게 공개됩니다.')
     } catch (err) {
       setNotice(err.message)
+      setNoticeError(true)
     } finally {
       setSending(false)
     }
@@ -57,6 +69,7 @@ export default function WorkComments({ slug }) {
 
       <form className="review-form" onSubmit={handleSubmit}>
         <input
+          ref={nameRef}
           className="review-input review-name"
           type="text"
           placeholder="이름 또는 별명"
@@ -67,6 +80,7 @@ export default function WorkComments({ slug }) {
         <input
           className="review-input"
           type="text"
+          ref={contentRef}
           placeholder="감상을 남겨주세요"
           value={content}
           maxLength={MAX_CONTENT}
@@ -74,7 +88,7 @@ export default function WorkComments({ slug }) {
         />
         <button className="review-submit" type="submit" disabled={sending}>등록</button>
       </form>
-      <p className="review-notice">{notice || '남겨주신 글은 확인 후 공개됩니다.'}</p>
+      <p className={`review-notice${noticeError ? ' review-notice--error' : ''}`}>{notice || '남겨주신 글은 확인 후 공개됩니다.'}</p>
 
       <ul className="review-list">
         {pending.map(c => (

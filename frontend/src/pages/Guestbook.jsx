@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { guestbookEnabled, fetchApproved, submitEntry } from '../lib/guestbook'
 import './Guestbook.css'
 
@@ -21,6 +21,8 @@ export default function Guestbook() {
   const [loadError, setLoadError] = useState('')
 
   const enabled = guestbookEnabled()
+  const nameRef = useRef(null)
+  const contentRef = useRef(null)
 
   useEffect(() => {
     if (!enabled) {
@@ -35,7 +37,14 @@ export default function Guestbook() {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    if (!nickname.trim() || !content.trim()) return
+    // 빈 칸이면 무엇을 채워야 하는지 알려 주고 그 칸으로 옮겨 준다
+    const missing = !nickname.trim() ? [nameRef, '이름 또는 별명을 입력해 주세요.'] : !content.trim() ? [contentRef, '소감을 입력해 주세요.'] : null
+    if (missing) {
+      setDone(false)
+      setFormError(missing[1])
+      missing[0].current?.focus()
+      return
+    }
 
     setSending(true)
     setFormError('')
@@ -64,12 +73,14 @@ export default function Guestbook() {
         <form className="guestbook-form" onSubmit={handleSubmit}>
           <input
             type="text"
+            ref={nameRef}
             placeholder="이름 또는 별명"
             value={nickname}
             maxLength={MAX_NICKNAME}
             onChange={e => setNickname(e.target.value)}
           />
           <textarea
+            ref={contentRef}
             placeholder="전시를 보신 소감을 남겨주세요."
             value={content}
             maxLength={MAX_CONTENT}
