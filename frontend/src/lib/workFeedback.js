@@ -28,8 +28,11 @@ export async function submitComment(slug, nickname, content) {
 
 // 내가 쓴 승인 대기 댓글 — 이 브라우저에만 기억해 두고 '승인 후 게시' 표시로 보여 준다.
 // 승인돼서 목록에 같은 글이 올라오거나 2주가 지나면 지운다.
+// '같은 글' = 이름·내용이 같고 쓴 시각이 가까운 것 — 예전에 승인된 똑같은 글(예: 'ㅎㅇ')과 헷갈리지 않게.
+// ponytail: 시각 비교라 PC 시계가 10분 넘게 틀리면 승인 후에도 본인 화면에 2주간 겹쳐 보일 수 있다. 문제 되면 댓글 id 를 받는 RPC 로.
 const pendingKey = slug => `pending-comments:${slug}`
 const PENDING_DAYS = 14
+const SAME_WRITE_MS = 10 * 60000
 
 export function loadPending(slug, approved = []) {
   try {
@@ -37,7 +40,8 @@ export function loadPending(slug, approved = []) {
     const cutoff = Date.now() - PENDING_DAYS * 86400000
     const left = list.filter(p =>
       new Date(p.created_at).getTime() > cutoff
-      && !approved.some(a => a.nickname === p.nickname && a.content === p.content))
+      && !approved.some(a => a.nickname === p.nickname && a.content === p.content
+        && Math.abs(new Date(a.created_at) - new Date(p.created_at)) < SAME_WRITE_MS))
     if (left.length !== list.length) localStorage.setItem(pendingKey(slug), JSON.stringify(left))
     return left
   } catch {
