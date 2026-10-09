@@ -142,8 +142,8 @@ export function worksFromSheets(sheets) {
         warnings.push(`${fileName} ${i + 2}번째 줄 (${get('name')}): 파트를 알 수 없어 건너뜀`)
         return
       }
-      // 역할 칸은 대표부터 팀원 순서대로 쉼표로 (예: 기획, 작화, 배경)
-      const roles = splitList(get('role'))
+      // 역할 칸은 대표부터 팀원 순서대로 쉼표로 (예: 기획, 작화, 배경) — '글·그림' 처럼 한 사람 역할 안의 · / 는 나누지 않는다
+      const roles = clean(get('role')).split(/[,、\n]+/).map(clean).filter(Boolean)
       const person = {
         name: get('name'),
         studentId: get('studentId'),
