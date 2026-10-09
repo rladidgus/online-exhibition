@@ -55,7 +55,8 @@ export default function AdminSettings() {
     if (!file) return
     try {
       notify('올리는 중입니다…', 'warn')
-      set({ cover_path: await uploadImage(file, 'site/cover') })
+      // 이름 끝 시각 = 같은 경로는 늘 같은 그림 (빌드가 배포된 사본을 재사용한다)
+      set({ cover_path: await uploadImage(file, `site/cover_${Date.now().toString(36)}`) })
       notify('첫 화면 그림을 올렸습니다. 저장을 눌러야 반영됩니다.', 'ok')
     } catch (err) {
       notify(errorText(err, '업로드에 실패했습니다.'), 'err')

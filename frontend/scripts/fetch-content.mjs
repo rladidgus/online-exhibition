@@ -104,17 +104,38 @@ for (const w of works) {
 }
 collect(site.cover_path)
 
+// 무료 보관함은 한 달 내보내기 양(egress)이 정해져 있어서, 이미 배포된 사이트에 있는 그림은 거기서 받는다.
+// 올릴 때 파일 이름 끝에 시각을 붙이므로(관리자 화면) 같은 경로 = 같은 그림이다.
+const LIVE_ORIGIN = process.env.CONTENT_LIVE_ORIGIN || 'https://bu-dia-grad2026.pages.dev'
+
+async function fromLiveSite(path) {
+  try {
+    const res = await fetch(`${LIVE_ORIGIN}/content/${path.split('/').map(encodeURIComponent).join('/')}`)
+    // 없는 경로는 사이트 기본 페이지(HTML)가 200 으로 오므로 그림인지 꼭 확인한다
+    if (!res.ok || !res.headers.get('content-type')?.startsWith('image/')) return null
+    return Buffer.from(await res.arrayBuffer())
+  } catch {
+    return null
+  }
+}
+
 let failed = 0
+let fromStorage = 0
 for (const path of paths) {
-  const { data, error } = await db.storage.from('works').download(path)
-  if (error || !data) {
-    console.warn(`[content] 이미지 없음: ${path} (${error?.message ?? '빈 응답'})`)
-    failed += 1
-    continue
+  let bytes = await fromLiveSite(path)
+  if (!bytes) {
+    const { data, error } = await db.storage.from('works').download(path)
+    if (error || !data) {
+      console.warn(`[content] 이미지 없음: ${path} (${error?.message ?? '빈 응답'})`)
+      failed += 1
+      continue
+    }
+    bytes = Buffer.from(await data.arrayBuffer())
+    fromStorage += 1
   }
   const abs = join(imageDir, path)
   await mkdir(dirname(abs), { recursive: true })
-  await writeFile(abs, Buffer.from(await data.arrayBuffer()))
+  await writeFile(abs, bytes)
 }
 
 const publicPath = p => (isStored(p) ? `/content/${p}` : p)
@@ -130,4 +151,4 @@ site.cover_path = publicPath(site.cover_path)
 
 await writeFile(contentJson, JSON.stringify({ site, parts, works }, null, 2) + '\n', 'utf8')
 
-console.log(`[content] 공개 작품 ${works.length} · 이미지 ${paths.size - failed}장` + (failed ? ` (실패 ${failed}건)` : ''))
+console.log(`[content] 공개 작품 ${works.length} · 이미지 ${paths.size - failed}장 (보관함에서 새로 받음 ${fromStorage}장)` + (failed ? ` (실패 ${failed}건)` : ''))

@@ -16,7 +16,7 @@ const blankWork = part => ({
 })
 
 const pad = (n, len) => String(n).padStart(len, '0')
-// 지운 뒤 다시 올려도 남아 있는 파일을 덮어쓰지 않게 이름 끝에 시각을 붙인다
+// 이름 끝에 시각을 붙여 같은 경로 = 같은 그림이 되게 한다(덮어쓰기 방지 + 빌드가 배포된 사이트의 사본을 재사용)
 const stamp = () => Date.now().toString(36)
 
 export default function AdminWorkEdit() {
@@ -75,7 +75,7 @@ export default function AdminWorkEdit() {
     if (!file || !requireSlug()) return
     try {
       notify('올리는 중입니다…', 'warn')
-      set({ cover_path: await uploadImage(file, `${folder}/main`) })
+      set({ cover_path: await uploadImage(file, `${folder}/main_${stamp()}`) })
       notify('대표 이미지를 올렸습니다. 저장을 눌러야 반영됩니다.', 'ok')
     } catch (err) {
       notify(errorText(err, '업로드에 실패했습니다.'), 'err')
