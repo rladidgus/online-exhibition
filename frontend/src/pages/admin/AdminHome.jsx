@@ -57,7 +57,7 @@ export default function AdminHome() {
         <div className="a-card">
           <p className="a-card__title">공개 상태</p>
           <p style={statStyle}>{data ? `${published} / ${works.length}` : '–'}</p>
-          <p style={subStyle}>공개로 표시된 작품</p>
+          <p style={subStyle}>공개로 표시한 작품 / 전체 작품</p>
         </div>
         <div className="a-card">
           <p className="a-card__title">방명록 대기</p>
