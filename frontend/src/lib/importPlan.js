@@ -142,10 +142,12 @@ export function worksFromSheets(sheets) {
         warnings.push(`${fileName} ${i + 2}번째 줄 (${get('name')}): 파트를 알 수 없어 건너뜀`)
         return
       }
+      // 역할 칸은 대표부터 팀원 순서대로 쉼표로 (예: 기획, 작화, 배경)
+      const roles = splitList(get('role'))
       const person = {
         name: get('name'),
         studentId: get('studentId'),
-        role: get('role') || null,
+        role: roles[0] ?? null,
         ...contactOf(get('contactType'), get('contactUrl')),
       }
       const submission = get('submission')
@@ -164,7 +166,7 @@ export function worksFromSheets(sheets) {
         world_setting: part === 'startup' || part === 'game' ? get('world') || null : null,
         video_url: get('video') || null,
         episodeTitles: [get('ep1'), get('ep2'), get('ep3')],
-        authors: [person, ...members.map(m => ({ name: m, studentId: '', role: null, contact_type: null, contact_url: null }))],
+        authors: [person, ...members.map((m, k) => ({ name: m, studentId: '', role: roles[k + 1] ?? null, contact_type: null, contact_url: null }))],
         source: `${fileName} ${i + 2}번째 줄`,
       }
       works.push(work)
