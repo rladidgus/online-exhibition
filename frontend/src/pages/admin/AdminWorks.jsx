@@ -52,7 +52,7 @@ export default function AdminWorks() {
   async function handleDelete(w) {
     if (!confirm(`"${w.title}" 을(를) 삭제합니다. 되돌릴 수 없습니다. 계속할까요?`)) return
     try {
-      await deleteWork(w.id)
+      await deleteWork(w)
       setWorks(list => list.filter(x => x.id !== w.id))
       notify('삭제했습니다.', 'ok')
     } catch (err) {

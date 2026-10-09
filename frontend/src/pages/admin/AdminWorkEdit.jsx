@@ -194,7 +194,7 @@ export default function AdminWorkEdit() {
   async function handleDelete() {
     if (!confirm('이 작품을 삭제합니다. 되돌릴 수 없습니다. 계속할까요?')) return
     try {
-      await deleteWork(id)
+      await deleteWork({ ...work, id })
       navigate('/admin/works')
     } catch (err) {
       notify(errorText(err, '삭제에 실패했습니다.'), 'err')

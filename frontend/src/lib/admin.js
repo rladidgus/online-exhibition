@@ -171,8 +171,17 @@ export async function setPublished(id, isPublished) {
   fail('공개 상태를 바꾸지 못했습니다', error)
 }
 
-export async function deleteWork(id) {
-  const { error } = await supabase.from('works').delete().eq('id', id)
+// 작품 행과 함께 그 작품이 쓰던 이미지도 보관함에서 지운다 (무료 1GB 를 아끼려고)
+// ponytail: 편집 중 교체·제거한 이미지는 남는다. 용량이 빠듯해지면 보관함 전체와 DB 경로를 대조해 정리.
+export async function deleteWork(work) {
+  const paths = [
+    work.cover_path,
+    ...work.media.map(m => m.path),
+    ...work.episodes.flatMap(e => e.pages),
+  ].filter(p => p && !p.startsWith('/') && !p.startsWith('http'))
+  if (paths.length) await supabase.storage.from(BUCKET).remove(paths)
+
+  const { error } = await supabase.from('works').delete().eq('id', work.id)
   fail('작품을 삭제하지 못했습니다', error)
 }
 
