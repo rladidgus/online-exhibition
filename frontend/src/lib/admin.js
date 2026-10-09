@@ -226,8 +226,11 @@ async function saveChildren(workId, w) {
 // ---- 이미지 ----
 
 // 줄여서 올리고 저장 경로를 돌려준다. base = 'works/W01/main' 처럼 확장자 뺀 경로
-export async function uploadImage(file, base) {
-  const { blob, type } = await resizeImage(file)
+// resize = resizeImage 옵션 (웹툰 원고는 { maxWidth: WEBTOON_WIDTH })
+export const WEBTOON_WIDTH = 1000
+
+export async function uploadImage(file, base, resize) {
+  const { blob, type } = await resizeImage(file, resize)
   const path = `${base}.${extFor(type)}`
   const { error } = await supabase.storage.from(BUCKET).upload(path, blob, { contentType: type, upsert: true })
   fail('이미지를 올리지 못했습니다', error)

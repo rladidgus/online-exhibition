@@ -4,11 +4,14 @@
 
 const PASSTHROUGH = ['image/svg+xml', 'image/gif']
 
-export async function resizeImage(file, maxEdge = 2000, quality = 0.85) {
+// maxWidth 를 주면 가로만 맞춘다 — 세로로 긴 웹툰 원고는 긴 변 기준으로 줄이면 폭이 좁아져서
+export async function resizeImage(file, { maxEdge = 2000, maxWidth, quality = 0.85 } = {}) {
   if (PASSTHROUGH.includes(file.type)) return { blob: file, type: file.type }
 
   const bitmap = await createImageBitmap(file)
-  const scale = Math.min(1, maxEdge / Math.max(bitmap.width, bitmap.height))
+  const scale = maxWidth
+    ? Math.min(1, maxWidth / bitmap.width)
+    : Math.min(1, maxEdge / Math.max(bitmap.width, bitmap.height))
   const canvas = document.createElement('canvas')
   canvas.width = Math.round(bitmap.width * scale)
   canvas.height = Math.round(bitmap.height * scale)

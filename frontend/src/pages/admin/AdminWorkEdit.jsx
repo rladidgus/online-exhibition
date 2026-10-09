@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
-import { listParts, getWork, createWork, updateWork, deleteWork, uploadImage } from '../../lib/admin'
+import { listParts, getWork, createWork, updateWork, deleteWork, uploadImage, WEBTOON_WIDTH } from '../../lib/admin'
 import { useNotice, errorText } from './useNotice.js'
 import Notice from './Notice'
 import AdminImage from './AdminImage'
@@ -114,7 +114,7 @@ export default function AdminWorkEdit() {
       for (const file of files) {
         n += 1
         notify(`원고를 올리는 중입니다… (${n})`, 'warn')
-        added.push(await uploadImage(file, `${folder}/ep${pad(ep.no, 2)}/${pad(n, 3)}_${stamp()}`))
+        added.push(await uploadImage(file, `${folder}/ep${pad(ep.no, 2)}/${pad(n, 3)}_${stamp()}`, { maxWidth: WEBTOON_WIDTH }))
       }
       notify(`원고 ${files.length}장을 올렸습니다. 저장을 눌러야 반영됩니다.`, 'ok')
     } catch (err) {

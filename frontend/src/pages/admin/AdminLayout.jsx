@@ -7,6 +7,7 @@ import './Admin.css'
 const NAV = [
   { to: '/admin', label: '대시보드', end: true },
   { to: '/admin/works', label: '작품 관리' },
+  { to: '/admin/import', label: '한꺼번에 올리기' },
   { to: '/admin/guestbook', label: '방명록·댓글' },
   { to: '/admin/settings', label: '사이트 설정' },
   { to: '/admin/password', label: '비밀번호' },

@@ -1,0 +1,22 @@
+# 무료 Supabase 는 1주일 동안 요청이 없으면 잠든다(관리자 로그인·방명록·댓글·좋아요가 멈춤).
+# 하루 두 번 가벼운 조회를 보내 오픈·전시 기간 동안 깨어 있게 한다. 공식 안내: 매일 몇 번의 요청이면 잠들지 않음.
+# URL·키는 사이트 화면 코드에 원래 들어 있는 공개용 값이다(publishable). 비밀 키는 쓰지 않는다.
+# 전시가 끝나 더 필요 없으면 이 파일을 지우면 된다.
+name: supabase keepalive
+
+on:
+  schedule:
+    - cron: '17 3,15 * * *'
+  workflow_dispatch:
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: DB 가벼운 조회
+        run: |
+          code=$(curl -s -o /dev/null -w '%{http_code}' \
+            -H "apikey: sb_publishable_edwTw63P9DvVrPSfvSQ8lg_Sr_ZwT7-" \
+            "https://xlfsgmbxkytbivpleuht.supabase.co/rest/v1/work_likes?select=count&limit=1")
+          echo "status $code"
+          test "$code" = "200"
