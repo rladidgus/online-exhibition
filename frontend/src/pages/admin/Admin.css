@@ -93,6 +93,7 @@
   padding: 1.25rem;
 }
 .a-card + .a-card { margin-top: 1rem; }
+.a-grid > .a-card + .a-card { margin-top: 0; } /* 격자 안 카드는 높이를 맞춘다 */
 .a-card__title {
   font-size: 0.75rem;
   font-weight: 700;
