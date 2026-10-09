@@ -1,5 +1,6 @@
-// 작품 데이터 (지금은 더미, 자료 취합 후 교체)
+// 작품 데이터 — 운영 빌드는 관리자가 DB 에 넣은 공개 작품(content.json), 그 밖에는 아래 더미
 // 필드명은 DB 컬럼과 같은 snake_case. slug = 제출번호 소문자, world_setting은 창업·게임만, episodes는 웹툰만.
+import { CONTENT } from './content'
 
 // 더미 이미지 — picsum seed 라 slug 별로 고정
 const cover = (slug) => `https://picsum.photos/seed/${slug}/800/600`
@@ -12,7 +13,7 @@ const episode = (slug, no, title, pages) => ({
   pages: Array.from({ length: pages }, (_, i) => `https://picsum.photos/seed/${slug}-ep${no}-${i + 1}/800/1200`),
 })
 
-export const WORKS = [
+const DUMMY_WORKS = [
   // ---- 창업 ----
   {
     slug: 's01', part_slug: 'startup', title: '골목 빵집 브랜드 리뉴얼', genres: ['브랜드'],
@@ -127,7 +128,10 @@ export const WORKS = [
     authors: [{ name: '노아영', role: '모델링', contact_type: 'behance', contact_url: 'https://www.behance.net/' }, { name: '황보람', role: '텍스처', contact_type: null, contact_url: null }],
     media: [video('https://www.youtube.com/watch?v=aqz-KE-bpKQ', '턴테이블'), image('g03', 1, '와이어프레임'), image('g03', 2, '텍스처')],
   },
-].sort((a, b) => a.part_slug.localeCompare(b.part_slug) || a.sort_order - b.sort_order)
+]
+
+export const WORKS = [...(CONTENT?.works ?? DUMMY_WORKS)]
+  .sort((a, b) => a.part_slug.localeCompare(b.part_slug) || a.sort_order - b.sort_order)
 
 export function findWork(slug) {
   return WORKS.find(w => w.slug === slug)

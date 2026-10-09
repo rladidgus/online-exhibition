@@ -10,13 +10,22 @@ npm install
 npm run dev
 ```
 
-`frontend/.env` 에 Supabase 값이 필요하다. 없으면 방명록·로그인만 동작하지 않고 나머지 화면은 정상이다.
+`frontend/.env` 에 Supabase 값이 필요하다. 없으면 방명록·관리자만 동작하지 않고 나머지 화면은 정상이다.
 
 ```
 VITE_SUPABASE_URL=...
 VITE_SUPABASE_ANON_KEY=...
 VITE_PARTICIPANTS_DATA=...
+SUPABASE_SERVICE_ROLE_KEY=...   # 빌드 전용(브라우저에 안 실림). 있으면 관리자가 저장한 공개 작품으로 빌드
 ```
+
+## 관리자 (`/admin`)
+
+준비위원회가 작품·작가·이미지·웹툰 회차·사이트 설정·방명록 승인을 직접 고치는 화면.
+이메일+비밀번호 로그인이고, `admins` 표에 있는 계정만 들어간다(계정은 Supabase 대시보드에서 발급).
+저장 → 대시보드 "사이트에 반영"(Cloudflare 배포 훅) → `npm run build` 앞단의 `scripts/fetch-content.mjs` 가
+DB 내용과 이미지를 `src/data/content.json` · `public/content/` 로 내려받아 정적 빌드한다.
+DB 준비 = `supabase/migrations/0001` → `0002` → `0003` 순서로 SQL Editor 에서 실행.
 
 ## 배포 — Cloudflare Pages
 

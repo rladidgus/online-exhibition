@@ -1,7 +1,8 @@
 // 메인 페이지 전역 설정. 필드명은 DB site_settings 컬럼과 동일.
-// [ ] 표시는 준비위 제출분으로 채울 자리.
+// [ ] 표시는 준비위 제출분으로 채울 자리. 운영 빌드는 관리자 화면에서 저장한 값(content.json)이 덮어쓴다.
+import { CONTENT } from './content'
 
-export const SITE = {
+const DEFAULT_SITE = {
   exhibition_title: '2026 졸업전시',
   department_name: '백석대학교 영상애니메이션과',
   // 참여자 전공 표기는 이 값으로 통일
@@ -32,6 +33,8 @@ export const SITE = {
   sns_instagram: 'https://instagram.com/',
   sns_x: '',
 }
+
+export const SITE = { ...DEFAULT_SITE, ...CONTENT?.site }
 
 // '2026-11-09', '2026-11-14' → '2026.11.09 – 11.14'
 export function formatPeriod(start, end) {

@@ -30,3 +30,6 @@ src/data/*
 !src/data/parts.js
 !src/data/works.js
 !src/data/site.js
+!src/data/content.js
+# 빌드 때 DB 에서 내려받는 것 (scripts/fetch-content.mjs)
+public/content/
