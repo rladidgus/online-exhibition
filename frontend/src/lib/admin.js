@@ -166,9 +166,12 @@ export async function updateWork(id, w) {
 }
 
 // 공개 토글처럼 작품 행만 바꿀 때 (작가·미디어는 그대로)
-export async function setPublished(id, isPublished) {
-  const { error } = await supabase.from('works').update({ is_published: isPublished }).eq('id', id)
+// 작품 하나 또는 여러 개(ids 배열)를 한 번에 공개/비공개. 실제로 바뀐 개수를 확인한다.
+export async function setPublished(ids, isPublished) {
+  const list = [].concat(ids)
+  const { data, error } = await supabase.from('works').update({ is_published: isPublished }).in('id', list).select('id')
   fail('공개 상태를 바꾸지 못했습니다', error)
+  if ((data?.length ?? 0) !== list.length) throw new Error(`${list.length}개 중 ${data?.length ?? 0}개만 바뀌었습니다. 새로고침 후 확인해 주세요.`)
 }
 
 // 작품 행과 함께 그 작품이 쓰던 이미지도 보관함에서 지운다 (무료 1GB 를 아끼려고)

@@ -81,7 +81,7 @@ export default function AdminGuestbook() {
           {TABS.map(([status, label]) => (
             <button key={label} type="button" onClick={() => setFilter(status)}
               className={`a-btn a-btn--sm ${filter === status ? 'a-btn--primary' : ''}`}>
-              {label}
+              {label} {(entries ?? []).filter(e => !status || e.status === status).length}
             </button>
           ))}
         </div>
