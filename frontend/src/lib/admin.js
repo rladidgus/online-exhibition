@@ -258,16 +258,19 @@ export async function listGuestbook(table = 'guestbook') {
 }
 
 export async function setGuestbookStatus(id, status, table = 'guestbook') {
-  const { error } = await supabase.from(table).update({
+  // 권한이 없으면 DB 는 오류 없이 0줄만 바꾸므로, 바뀐 줄을 돌려받아 확인한다
+  const { data, error } = await supabase.from(table).update({
     status,
     approved_at: status === 'approved' ? new Date().toISOString() : null,
-  }).eq('id', id)
+  }).eq('id', id).select('id')
   fail('상태를 바꾸지 못했습니다', error)
+  if (!data?.length) throw new Error('상태가 바뀌지 않았습니다. 새로고침 후 다시 시도해 주세요.')
 }
 
 export async function deleteGuestbookEntry(id, table = 'guestbook') {
-  const { error } = await supabase.from(table).delete().eq('id', id)
+  const { data, error } = await supabase.from(table).delete().eq('id', id).select('id')
   fail('삭제하지 못했습니다', error)
+  if (!data?.length) throw new Error('삭제되지 않았습니다. 새로고침 후 다시 시도해 주세요.')
 }
 
 // ---- 사이트에 반영 ----
