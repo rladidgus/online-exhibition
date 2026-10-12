@@ -4,12 +4,14 @@ import { findWork, relatedWorks } from '../data/works'
 import { toEmbedUrl } from '../lib/embed'
 import WorkCard from '../components/WorkCard'
 import LikeButton from '../components/LikeButton'
+import { useLike } from '../lib/useLike'
 import WorkComments from '../components/WorkComments'
 import './WorkDetail.css'
 
 export default function WorkDetail() {
   const { slug } = useParams()
   const work = findWork(slug)
+  const like = useLike(slug)
 
   if (!work) {
     return (
@@ -24,8 +26,8 @@ export default function WorkDetail() {
 
   const part = getPart(work.part_slug)
   const episodes = work.episodes ?? []
-  // 웹툰은 회차로 한 번 더 들어가는 구조라 추천을 두지 않는다 (대표 결정)
-  const related = work.part_slug === 'webtoon' ? [] : relatedWorks(work)
+  // 오른쪽 추천은 화면 높이 안에 다 들어오게 4개 (스크롤해도 제자리에 고정)
+  const related = relatedWorks(work, 4)
 
   return (
     <main className="detail-page page-offset">
@@ -66,7 +68,7 @@ export default function WorkDetail() {
         <div className="detail-content">
           <div className="detail-title-row">
             <h1 className="detail-title">{work.title}</h1>
-            <LikeButton slug={work.slug} />
+            <LikeButton {...like} />
           </div>
 
           {work.genres.length > 0 && (
@@ -97,7 +99,7 @@ export default function WorkDetail() {
         {/* 회차 (웹툰) */}
         {episodes.length > 0 && (
           <section className="detail-episodes">
-            <h2 className="detail-section-title">회차 <span>{episodes.length}</span></h2>
+            <h2 className="detail-section-title">회차</h2>
             <ul className="episode-list">
               {episodes.map(ep => (
                 <li key={ep.no} className="episode-item">
@@ -137,7 +139,7 @@ export default function WorkDetail() {
         )}
 
         {/* 댓글 — 준비위 승인 후 공개 */}
-        <WorkComments slug={work.slug} />
+        <WorkComments slug={work.slug} action={<LikeButton {...like} />} />
       </div>
 
       {/* 다른 참여자 작품 — 오른쪽에 작은 가로형 카드로 (같은 파트 우선) */}

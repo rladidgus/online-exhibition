@@ -12,7 +12,8 @@ function formatDate(iso) {
 
 // 작품 상세 아래 댓글 (형 원래 디자인 .detail-reviews 그대로). 로그인 없이 쓰고, 준비위 승인 후 공개.
 // 내가 쓴 글은 승인 전에도 내 화면에만 '승인 후 게시됩니다' 표시와 함께 보인다.
-export default function WorkComments({ slug }) {
+// action = 제목 줄 오른쪽에 둘 버튼 (작품 상세에서 하트를 넘긴다)
+export default function WorkComments({ slug, action = null }) {
   const enabled = guestbookEnabled()
   const [comments, setComments] = useState([])
   const [pending, setPending] = useState([])
@@ -65,7 +66,10 @@ export default function WorkComments({ slug }) {
 
   return (
     <div className="detail-reviews">
-      <h2 className="reviews-title">Comments <span>{comments.length + pending.length}</span></h2>
+      <div className="reviews-head">
+        <h2 className="reviews-title">Comments <span>{comments.length + pending.length}</span></h2>
+        {action}
+      </div>
 
       <form className="review-form" onSubmit={handleSubmit}>
         <input

@@ -368,11 +368,18 @@
   background: #000;
 }
 
+.reviews-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
 .reviews-title {
   font-size: 18px;
   font-weight: 700;
   letter-spacing: -0.025em;
-  margin-bottom: 28px;
 }
 
 .reviews-title span {

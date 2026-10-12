@@ -59,10 +59,10 @@
   color: var(--color-text-secondary);
 }
 
-/* 가로형 — 썸네일 왼쪽, 글 오른쪽 */
+/* 가로형 — 썸네일 왼쪽, 글 오른쪽 (글 칸의 윗선을 썸네일 윗변에 맞춘다) */
 .work-card--row {
   flex-direction: row;
-  align-items: center;
+  align-items: flex-start;
   gap: 16px;
 }
 
@@ -74,8 +74,8 @@
 .work-card--row .work-card-info {
   flex: 1;
   min-width: 0;
-  padding-top: 10px;
-  padding-bottom: 10px;
+  padding-top: 12px;
+  padding-bottom: 0;
 }
 
 .work-card--row .work-card-title {
