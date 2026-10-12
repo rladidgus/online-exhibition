@@ -24,11 +24,12 @@ export default function WorkDetail() {
 
   const part = getPart(work.part_slug)
   const episodes = work.episodes ?? []
-  // 웹툰은 회차로 한 번 더 들어가는 구조라 아래 추천을 두지 않는다 (대표 결정)
-  const related = work.part_slug === 'webtoon' ? [] : relatedWorks(work, 4)
+  // 웹툰은 회차로 한 번 더 들어가는 구조라 추천을 두지 않는다 (대표 결정)
+  const related = work.part_slug === 'webtoon' ? [] : relatedWorks(work)
 
   return (
     <main className="detail-page page-offset">
+      <div className="detail-layout">
       <div className="detail-inner">
         {/* 뒤로가기 — 같은 파트 목록으로 */}
         <Link to={`/works?part=${work.part_slug}`} className="detail-back">← {part.label}</Link>
@@ -103,7 +104,6 @@ export default function WorkDetail() {
                   <Link to={`/works/${work.slug}/ep/${ep.no}`} className="episode-link">
                     <span className="episode-no">{ep.no}화</span>
                     <span className="episode-title">{ep.title}</span>
-                    <span className="episode-pages">{ep.pages.length}장</span>
                   </Link>
                 </li>
               ))}
@@ -136,22 +136,23 @@ export default function WorkDetail() {
           </section>
         )}
 
-        {/* 다른 참여자 작품 — 작품을 다 본 뒤 맨 아래에 (같은 파트 우선, 오른쪽 칸은 감상에 방해된다는 피드백으로 옮김) */}
-        {related.length > 0 && (
-          <section className="detail-related">
-            <h2 className="detail-related-title">다른 참여자 작품</h2>
-            <ul className="detail-related-list">
-              {related.map(w => (
-                <li key={w.slug}>
-                  <WorkCard work={w} />
-                </li>
-              ))}
-            </ul>
-          </section>
-        )}
-
         {/* 댓글 — 준비위 승인 후 공개 */}
         <WorkComments slug={work.slug} />
+      </div>
+
+      {/* 다른 참여자 작품 — 오른쪽에 작은 가로형 카드로 (같은 파트 우선) */}
+      {related.length > 0 && (
+        <aside className="detail-aside">
+          <h2 className="detail-aside-title">다른 참여자 작품</h2>
+          <ul className="detail-aside-list">
+            {related.map(w => (
+              <li key={w.slug}>
+                <WorkCard work={w} row />
+              </li>
+            ))}
+          </ul>
+        </aside>
+      )}
       </div>
     </main>
   )

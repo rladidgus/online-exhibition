@@ -58,3 +58,28 @@
   font-size: 13px;
   color: var(--color-text-secondary);
 }
+
+/* 가로형 — 썸네일 왼쪽, 글 오른쪽 */
+.work-card--row {
+  flex-direction: row;
+  align-items: center;
+  gap: 16px;
+}
+
+.work-card--row .work-card-image {
+  flex: 0 0 140px;
+  width: 140px;
+}
+
+.work-card--row .work-card-info {
+  flex: 1;
+  min-width: 0;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.work-card--row .work-card-title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
