@@ -69,8 +69,10 @@
   transition: transform 0.3s ease;
 }
 
-.designer-card:hover .designer-thumb img {
-  transform: scale(1.04);
+@media (hover: hover) {
+  .designer-card:hover .designer-thumb img {
+    transform: scale(1.04);
+  }
 }
 
 /* 아직 작품이 연결되지 않은 참여자 — 이름 첫 글자 */
@@ -94,8 +96,10 @@
   letter-spacing: -0.02em;
 }
 
-.designer-card:hover .designer-card-name {
-  color: var(--color-accent);
+@media (hover: hover) {
+  .designer-card:hover .designer-card-name {
+    color: var(--color-accent);
+  }
 }
 
 .designer-card-team {

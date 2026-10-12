@@ -29,8 +29,10 @@
   color: var(--color-text);
 }
 
-.navbar-logo:hover {
-  color: var(--color-text);
+@media (hover: hover) {
+  .navbar-logo:hover {
+    color: var(--color-text);
+  }
 }
 
 .navbar-links {
@@ -47,9 +49,21 @@
   letter-spacing: -0.01em;
 }
 
-.navbar-link:hover,
+/* 터치 기기: 누르는 즉시 바뀌게 (hover 색이 먼저 들어가고 0.2초 뒤 검정이 되는 '드르륵' 방지) */
+@media (hover: none) {
+  .navbar-link {
+    transition: none;
+  }
+}
+
 .navbar-link.active {
   color: var(--color-text);
+}
+
+@media (hover: hover) {
+  .navbar-link:hover {
+    color: var(--color-text);
+  }
 }
 
 .navbar-hamburger {
@@ -91,8 +105,17 @@
   transition: color 0.2s;
 }
 
-.navbar-mobile-link:hover {
-  color: var(--color-accent);
+/* 터치 기기: 누르는 즉시 바뀌게 (hover 색이 먼저 들어가고 0.2초 뒤 검정이 되는 '드르륵' 방지) */
+@media (hover: none) {
+  .navbar-mobile-link {
+    transition: none;
+  }
+}
+
+@media (hover: hover) {
+  .navbar-mobile-link:hover {
+    color: var(--color-accent);
+  }
 }
 
 /* 네비 높이만큼 페이지 여백 */

@@ -32,8 +32,10 @@
   white-space: nowrap;
 }
 
-.viewer-back:hover {
-  color: var(--color-accent);
+@media (hover: hover) {
+  .viewer-back:hover {
+    color: var(--color-accent);
+  }
 }
 
 .viewer-heading {

@@ -57,10 +57,23 @@
   transition: background-color 0.18s ease, color 0.18s ease;
 }
 
-.part-name:hover,
+/* 터치 기기: 누르는 즉시 바뀌게 (hover 색이 먼저 들어가고 0.2초 뒤 검정이 되는 '드르륵' 방지) */
+@media (hover: none) {
+  .part-name {
+    transition: none;
+  }
+}
+
 .part-name:focus-visible {
   background: var(--color-hover);
   color: var(--color-accent);
+}
+
+@media (hover: hover) {
+  .part-name:hover {
+    background: var(--color-hover);
+    color: var(--color-accent);
+  }
 }
 
 @media (max-width: 1024px) {

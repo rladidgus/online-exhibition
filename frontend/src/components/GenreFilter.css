@@ -14,9 +14,18 @@
   transition: border-color 0.18s ease, color 0.18s ease, background 0.18s ease;
 }
 
-.genre-chip:hover {
-  color: var(--color-accent);
-  border-color: var(--color-accent);
+/* 터치 기기: 누르는 즉시 바뀌게 (hover 색이 먼저 들어가고 0.2초 뒤 검정이 되는 '드르륵' 방지) */
+@media (hover: none) {
+  .genre-chip {
+    transition: none;
+  }
+}
+
+@media (hover: hover) {
+  .genre-chip:hover {
+    color: var(--color-accent);
+    border-color: var(--color-accent);
+  }
 }
 
 .genre-chip.active {

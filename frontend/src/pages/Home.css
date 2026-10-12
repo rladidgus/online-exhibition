@@ -45,11 +45,11 @@
   position: absolute;
   inset: 0;
   background: linear-gradient(
-    100deg,
-    rgba(255, 255, 255, 0.9) 0%,
-    rgba(255, 255, 255, 0.7) 30%,
-    rgba(255, 255, 255, 0.22) 58%,
-    rgba(255, 255, 255, 0) 80%
+  100deg,
+  rgba(255, 255, 255, 0.9) 0%,
+  rgba(255, 255, 255, 0.7) 30%,
+  rgba(255, 255, 255, 0.22) 58%,
+  rgba(255, 255, 255, 0) 80%
   );
 }
 
@@ -120,8 +120,10 @@
   transition: color 0.2s;
 }
 
-.home-cover-enter:hover {
-  color: var(--color-accent);
+@media (hover: hover) {
+  .home-cover-enter:hover {
+    color: var(--color-accent);
+  }
 }
 
 .home-cover-arrow {
@@ -191,9 +193,18 @@
   transition: background 0.2s, color 0.2s;
 }
 
-.btn-primary:hover {
-  background: var(--color-accent);
-  color: #ffffff;
+/* 터치 기기: 누르는 즉시 바뀌게 (hover 색이 먼저 들어가고 0.2초 뒤 검정이 되는 '드르륵' 방지) */
+@media (hover: none) {
+  .btn-primary {
+    transition: none;
+  }
+}
+
+@media (hover: hover) {
+  .btn-primary:hover {
+    background: var(--color-accent);
+    color: #ffffff;
+  }
 }
 
 .btn-ghost {
@@ -210,9 +221,18 @@
   transition: border-color 0.2s, color 0.2s;
 }
 
-.btn-ghost:hover {
-  color: var(--color-accent);
-  border-color: var(--color-accent);
+/* 터치 기기: 누르는 즉시 바뀌게 (hover 색이 먼저 들어가고 0.2초 뒤 검정이 되는 '드르륵' 방지) */
+@media (hover: none) {
+  .btn-ghost {
+    transition: none;
+  }
+}
+
+@media (hover: hover) {
+  .btn-ghost:hover {
+    color: var(--color-accent);
+    border-color: var(--color-accent);
+  }
 }
 
 /* 기획의도 · 오프닝 영상 · 오시는 길 — 공통 */
@@ -384,22 +404,30 @@
   transition: width 0.3s ease;
 }
 
-.category-card:hover::after {
-  width: 100%;
+@media (hover: hover) {
+  .category-card:hover::after {
+    width: 100%;
+  }
 }
 
-.category-card:hover {
-  background: var(--color-hover);
+@media (hover: hover) {
+  .category-card:hover {
+    background: var(--color-hover);
+  }
 }
 
-.category-card:hover .category-card-label {
-  color: var(--color-accent);
+@media (hover: hover) {
+  .category-card:hover .category-card-label {
+    color: var(--color-accent);
+  }
 }
 
-.category-card:hover .category-card-count {
-  font-size: 12px;
-  color: var(--color-text-secondary);
-  margin-right: 12px;
+@media (hover: hover) {
+  .category-card:hover .category-card-count {
+    font-size: 12px;
+    color: var(--color-text-secondary);
+    margin-right: 12px;
+  }
 }
 
 .category-card-arrow {

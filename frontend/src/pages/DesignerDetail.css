@@ -14,8 +14,10 @@
   transition: color 0.2s;
 }
 
-.designer-back:hover {
-  color: var(--color-accent);
+@media (hover: hover) {
+  .designer-back:hover {
+    color: var(--color-accent);
+  }
 }
 
 .designer-detail-header {
@@ -40,6 +42,7 @@
   font-weight: 700;
   letter-spacing: -0.045em;
   line-height: 1.15;
+  margin-left: -1px; /* 큰 글자의 글꼴 여백 보정 — 아래 전공명과 왼쪽 선 맞춤 */
 }
 
 .designer-detail-sid {
@@ -146,16 +149,29 @@
   transition: border-color 0.18s ease, color 0.18s ease;
 }
 
+/* 터치 기기: 누르는 즉시 바뀌게 (hover 색이 먼저 들어가고 0.2초 뒤 검정이 되는 '드르륵' 방지) */
+@media (hover: none) {
+  .designer-sibling {
+    transition: none;
+  }
+}
+
 .designer-sibling.is-current {
   background: var(--color-text);
   color: #ffffff;
   border-color: var(--color-text);
 }
 
-.designer-sibling:hover,
 .designer-sibling:focus-visible {
   border-color: var(--color-accent);
   color: var(--color-accent);
+}
+
+@media (hover: hover) {
+  .designer-sibling:hover {
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+  }
 }
 
 .designer-empty {

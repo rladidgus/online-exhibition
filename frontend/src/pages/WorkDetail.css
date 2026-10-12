@@ -31,8 +31,10 @@
   transition: color 0.2s;
 }
 
-.detail-back:hover {
-  color: var(--color-accent);
+@media (hover: hover) {
+  .detail-back:hover {
+    color: var(--color-accent);
+  }
 }
 
 .detail-image {
@@ -48,8 +50,10 @@
   transition: transform 0.5s ease;
 }
 
-.detail-image:hover img {
-  transform: scale(1.02);
+@media (hover: hover) {
+  .detail-image:hover img {
+    transform: scale(1.02);
+  }
 }
 
 .detail-content {
@@ -101,6 +105,7 @@
   font-weight: 700;
   letter-spacing: -0.04em;
   margin-bottom: 10px;
+  margin-left: -0.05em; /* 큰 글자의 글꼴 여백 보정 */
 }
 
 .detail-genres {
@@ -121,9 +126,11 @@
   transition: border-color 0.18s ease, color 0.18s ease;
 }
 
-.detail-genres a:hover {
-  color: var(--color-accent);
-  border-color: var(--color-accent);
+@media (hover: hover) {
+  .detail-genres a:hover {
+    color: var(--color-accent);
+    border-color: var(--color-accent);
+  }
 }
 
 .detail-authors {
@@ -221,8 +228,10 @@
   transition: color 0.2s;
 }
 
-.episode-link:hover {
-  color: var(--color-accent);
+@media (hover: hover) {
+  .episode-link:hover {
+    color: var(--color-accent);
+  }
 }
 
 .episode-no {
@@ -356,10 +365,23 @@
   letter-spacing: 0.02em;
 }
 
-.detail-like:hover,
+/* 터치 기기: 누르는 즉시 바뀌게 (hover 색이 먼저 들어가고 0.2초 뒤 검정이 되는 '드르륵' 방지) */
+@media (hover: none) {
+  .detail-like {
+    transition: none;
+  }
+}
+
 .detail-like.liked {
   color: #e03434;
   border-color: #e03434;
+}
+
+@media (hover: hover) {
+  .detail-like:hover {
+    color: #e03434;
+    border-color: #e03434;
+  }
 }
 
 .detail-reviews {
@@ -446,9 +468,18 @@
   letter-spacing: 0.02em;
 }
 
-.review-submit:hover {
-  background: var(--color-accent);
-  border-color: var(--color-accent);
+/* 터치 기기: 누르는 즉시 바뀌게 (hover 색이 먼저 들어가고 0.2초 뒤 검정이 되는 '드르륵' 방지) */
+@media (hover: none) {
+  .review-submit {
+    transition: none;
+  }
+}
+
+@media (hover: hover) {
+  .review-submit:hover {
+    background: var(--color-accent);
+    border-color: var(--color-accent);
+  }
 }
 
 .review-notice {

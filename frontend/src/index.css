@@ -36,8 +36,10 @@ a {
   transition: color 0.2s;
 }
 
-a:hover {
-  color: var(--color-accent);
+@media (hover: hover) {
+  a:hover {
+    color: var(--color-accent);
+  }
 }
 
 button {
@@ -45,6 +47,13 @@ button {
   font-family: var(--font);
   border: none;
   background: none;
+  touch-action: manipulation;
+}
+
+/* 터치 기기: 누를 때 회색 하이라이트가 깜빡이지 않게 */
+a,
+button {
+  -webkit-tap-highlight-color: transparent;
 }
 
 img {
@@ -52,7 +61,11 @@ img {
   max-width: 100%;
 }
 
-h1, h2, h3, h4, h5 {
+h1,
+ h2,
+ h3,
+ h4,
+ h5 {
   font-weight: 600;
   letter-spacing: -0.025em;
   line-height: 1.1em;
@@ -82,10 +95,24 @@ h1, h2, h3, h4, h5 {
   animation: bounceDown 0.9s ease-out forwards;
 }
 
-.delay-1 { animation-delay: 0.1s; }
-.delay-2 { animation-delay: 0.2s; }
-.delay-3 { animation-delay: 0.3s; }
-.delay-4 { animation-delay: 0.4s; }
-.delay-5 { animation-delay: 0.5s; }
-.delay-6 { animation-delay: 0.7s; }
-.delay-7 { animation-delay: 0.9s; }
+.delay-1 {
+  animation-delay: 0.1s;
+}
+.delay-2 {
+  animation-delay: 0.2s;
+}
+.delay-3 {
+  animation-delay: 0.3s;
+}
+.delay-4 {
+  animation-delay: 0.4s;
+}
+.delay-5 {
+  animation-delay: 0.5s;
+}
+.delay-6 {
+  animation-delay: 0.7s;
+}
+.delay-7 {
+  animation-delay: 0.9s;
+}

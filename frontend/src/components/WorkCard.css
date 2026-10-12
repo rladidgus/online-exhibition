@@ -20,9 +20,11 @@
   transition: transform 0.5s ease, opacity 0.3s ease;
 }
 
-.work-card:hover .work-card-image img {
-  transform: scale(1.06);
-  opacity: 0.88;
+@media (hover: hover) {
+  .work-card:hover .work-card-image img {
+    transform: scale(1.06);
+    opacity: 0.88;
+  }
 }
 
 .work-card-info {
@@ -50,8 +52,10 @@
   transition: color 0.2s;
 }
 
-.work-card:hover .work-card-title {
-  color: var(--color-accent);
+@media (hover: hover) {
+  .work-card:hover .work-card-title {
+    color: var(--color-accent);
+  }
 }
 
 .work-card-author {
