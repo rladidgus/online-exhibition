@@ -138,8 +138,6 @@ export default function WorkDetail() {
           </section>
         )}
 
-        {/* 댓글 — 준비위 승인 후 공개 */}
-        <WorkComments slug={work.slug} action={<LikeButton {...like} />} />
       </div>
 
       {/* 다른 참여자 작품 — 오른쪽에 작은 가로형 카드로 (같은 파트 우선) */}
@@ -155,6 +153,9 @@ export default function WorkDetail() {
           </ul>
         </aside>
       )}
+
+      {/* 댓글 — 준비위 승인 후 공개. PC 는 본문 아래 왼쪽 열, 휴대폰은 추천 다음 */}
+      <WorkComments slug={work.slug} action={<LikeButton {...like} />} />
       </div>
     </main>
   )

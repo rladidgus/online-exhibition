@@ -4,9 +4,6 @@
   padding: 80px 40px 100px;
 }
 
-.designer-detail-inner {
-  max-width: 760px;
-}
 
 .designer-back {
   display: inline-block;
@@ -80,10 +77,16 @@
 .designer-works-grid {
   list-style: none;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 24px 20px;
   padding: 0;
   margin: 0 0 28px;
+}
+
+@media (max-width: 1024px) {
+  .designer-works-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 
 .designer-works-empty {

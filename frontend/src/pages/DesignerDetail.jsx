@@ -42,9 +42,7 @@ export default function DesignerDetail() {
         </header>
 
         <section className="designer-works">
-          <h2 className="designer-works-title">
-            Works {works.length > 0 && <span>{works.length}</span>}
-          </h2>
+          <h2 className="designer-works-title">Works</h2>
 
           {works.length > 0 ? (
             <ul className="designer-works-grid">
